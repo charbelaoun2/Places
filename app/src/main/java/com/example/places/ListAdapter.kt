@@ -5,19 +5,19 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 
 class ListAdapter(
-    private val lists : MutableList<Place>
-) : RecyclerView.Adapter<ListViewHolder>(){
+    private val lists: MutableList<Place>
+) : RecyclerView.Adapter<ListViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListViewHolder {
-        return ListViewHolder(LayoutInflater.from(parent.context).inflate(
-            R.layout.list_item,parent,false
-        ))
+        return ListViewHolder(
+            LayoutInflater.from(parent.context).inflate(
+                R.layout.list_item, parent, false
+            )
+        )
     }
 
     override fun onBindViewHolder(holder: ListViewHolder, position: Int) {
-        val current_city=lists[position]
-        holder.setItem(current_city)
-
-
+        val curcity = lists[position]
+        holder.setItem(curcity)
     }
 
     override fun getItemCount(): Int = lists.size
