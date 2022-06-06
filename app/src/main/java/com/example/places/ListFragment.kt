@@ -23,6 +23,7 @@ class ListFragment : Fragment(R.layout.list_fragment) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val listAdapter = ListAdapter(
+            mutableListOf()
 //            mutableListOf(
 //                Place(name = "charbel", "beirut", "fdhfrj", "fjfbhe", "reiuthrei", "gfhi"),
 //                Place(name = "charbel", "beirut", "fdhfrj", "fjfbhe", "reiuthrei", "gfhi"),
