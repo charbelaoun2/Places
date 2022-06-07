@@ -21,8 +21,13 @@ android {
     }
 
     buildTypes {
+        debug {
+            buildConfigField "String", "FOUR_SQUARE_API", "\"fsq3TNbawManfH3hre9IlrnuEcASurb/AnanhhuCq6cdktE=\""
+        }
+
         release {
             minifyEnabled false
+            buildConfigField "String", "FOUR_SQUARE_API", "\"fsq3TNbawManfH3hre9IlrnuEcASurb/AnanhhuCq6cdktE=\""
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }

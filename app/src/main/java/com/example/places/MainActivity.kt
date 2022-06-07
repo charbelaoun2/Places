@@ -1,11 +1,17 @@
 package com.example.places
 
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import com.example.places.databinding.ActivityMainBinding
+import retrofit2.HttpException
+import java.io.IOException
+
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,5 +36,7 @@ class MainActivity : AppCompatActivity() {
                 commit()
             }
         }
+
+
     }
 }
