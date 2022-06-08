@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/list_Layout"
     android:layout_width="match_parent"
+    android:id="@+id/listLayout"
     android:layout_height="wrap_content"
     android:paddingStart="8dp"
-    android:paddingEnd="8dp">
+    android:paddingEnd="8dp"
+    >
+
 
     <ImageView
         android:id="@+id/place_image_view"
@@ -25,54 +26,45 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="36dp"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="12dp"
+        tools:text="name"
         android:textSize="20sp"
         app:layout_constraintStart_toEndOf="@+id/place_image_view"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="name" />
+        app:layout_constraintTop_toTopOf="parent" />
+
 
     <TextView
         android:id="@+id/address_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="36dp"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="5dp"
+        tools:text="adress"
         android:textSize="20sp"
         app:layout_constraintStart_toEndOf="@+id/place_image_view"
-        app:layout_constraintTop_toBottomOf="@+id/name_text_view"
-        tools:text="address" />
+        app:layout_constraintTop_toBottomOf="@+id/name_text_view" />
 
     <TextView
-        android:id="@+id/email_address_text_view"
+        android:id="@+id/emailaddres_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="36dp"
-        android:layout_marginTop="34dp"
+        android:layout_marginTop="38dp"
+        tools:text="email"
         android:textSize="20sp"
         app:layout_constraintStart_toEndOf="@+id/place_image_view"
-        app:layout_constraintTop_toBottomOf="@+id/name_text_view"
-        tools:text="email" />
+        app:layout_constraintTop_toBottomOf="@+id/name_text_view" />
+
 
     <TextView
         android:id="@+id/description_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="36dp"
-        android:layout_marginTop="65dp"
+        android:layout_marginTop="70dp"
+        tools:text="description"
         android:textSize="20sp"
         app:layout_constraintStart_toEndOf="@+id/place_image_view"
-        app:layout_constraintTop_toBottomOf="@+id/name_text_view"
-        tools:text="description" />
-
-    <TextView
-        android:id="@+id/tel_text_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="36dp"
-        android:layout_marginTop="96dp"
-        android:textSize="20sp"
-        app:layout_constraintStart_toEndOf="@+id/place_image_view"
-        app:layout_constraintTop_toBottomOf="@+id/name_text_view"
-        tools:text="tel" />
+        app:layout_constraintTop_toBottomOf="@+id/name_text_view" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
