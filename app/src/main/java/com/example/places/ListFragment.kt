@@ -12,8 +12,6 @@ import com.example.places.databinding.ListFragmentBinding
 import retrofit2.HttpException
 import java.io.IOException
 
-const val TAG = "Main Activity"
-
 class ListFragment : Fragment(R.layout.list_fragment) {
     private var binding: ListFragmentBinding? = null
 
@@ -33,10 +31,8 @@ class ListFragment : Fragment(R.layout.list_fragment) {
                 RetrofitInstance.api.getPlaces("41.8781,-87.6298", 9999)
 
             } catch (e: IOException) {
-                Log.e(TAG, "IOException, you may not have internet connection")
                 return@launchWhenCreated
             } catch (e: HttpException) {
-                Log.e(TAG, "HttpException, unexpected response ")
                 return@launchWhenCreated
             }
 

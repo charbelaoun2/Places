@@ -10,7 +10,7 @@ interface PlaceApi {
     @Headers("Authorization:${BuildConfig.FOUR_SQUARE_API}")
     @GET("v3/places/search")
     suspend fun getPlaces(
-        @Query("ll") ll: (String),
+        @Query("ll") ll: String,
         @Query("radius") radius: Int
     ): Response<PlaceResponse>
 }
