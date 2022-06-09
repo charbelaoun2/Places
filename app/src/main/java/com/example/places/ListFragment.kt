@@ -1,7 +1,6 @@
 package com.example.places
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -29,7 +28,6 @@ class ListFragment : Fragment(R.layout.list_fragment) {
         lifecycleScope.launchWhenCreated {
             val response = try {
                 RetrofitInstance.api.getPlaces("41.8781,-87.6298", 9999)
-
             } catch (e: IOException) {
                 return@launchWhenCreated
             } catch (e: HttpException) {
@@ -45,21 +43,17 @@ class ListFragment : Fragment(R.layout.list_fragment) {
 
             if (response.isSuccessful && list != null) {
                 setupAdapter(list)
-
             }
         }
-
-
     }
 
     fun setupAdapter(placesList: List<Place>) {
         val listAdapter = ListAdapter(
             placesList
-
         )
+
         binding?.placesRecyclerView?.adapter = listAdapter
         binding?.placesRecyclerView?.layoutManager = LinearLayoutManager(context)
-
     }
 
     override fun onDestroyView() {
