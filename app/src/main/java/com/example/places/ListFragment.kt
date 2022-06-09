@@ -5,8 +5,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.places.databinding.ListFragmentBinding
+import retrofit2.HttpException
+import java.io.IOException
 
 class ListFragment : Fragment(R.layout.list_fragment) {
     private var binding: ListFragmentBinding? = null
@@ -22,18 +25,35 @@ class ListFragment : Fragment(R.layout.list_fragment) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        lifecycleScope.launchWhenCreated {
+            val response = try {
+                RetrofitInstance.api.getPlaces("41.8781,-87.6298", 9999)
+            } catch (e: IOException) {
+                return@launchWhenCreated
+            } catch (e: HttpException) {
+                return@launchWhenCreated
+            }
+
+            val list = response.body()?.results?.map {
+                Place(
+                    it.name,
+                    it.location.address, "url", it.email, it.description, it.tel
+                )
+            }
+
+            if (response.isSuccessful && list != null) {
+                setupAdapter(list)
+            }
+        }
+    }
+
+    fun setupAdapter(placesList: List<Place>) {
         val listAdapter = ListAdapter(
-//            mutableListOf(
-//                Place(name = "charbel", "beirut", "fdhfrj", "fjfbhe", "reiuthrei", "gfhi"),
-//                Place(name = "charbel", "beirut", "fdhfrj", "fjfbhe", "reiuthrei", "gfhi"),
-//                Place(name = "charbel", "beirut", "fdhfrj", "fjfbhe", "reiuthrei", "gfhi"),
-//                Place(name = "charbel", "beirut", "fdhfrj", "fjfbhe", "reiuthrei", "gfhi")
-//            )
+            placesList
         )
 
         binding?.placesRecyclerView?.adapter = listAdapter
         binding?.placesRecyclerView?.layoutManager = LinearLayoutManager(context)
-
     }
 
     override fun onDestroyView() {

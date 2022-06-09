@@ -14,10 +14,21 @@ class ListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     private val tvTel = itemView.findViewById<TextView>(R.id.tel_text_view)
 
     fun setItem(place: Place) {
-        tvName.text = place.name
-        tvAddress.text = place.address
-        tvEmail.text = place.email
-        tvDescription.text = place.description
-        tvTel.text = place.tel
+        tvName.text = place.name ?: "N/A"
+        tvEmail.text = place.email ?: "N/A"
+        tvAddress.text = place.address ?: "N/A"
+        tvEmail.text = place.email ?: "N/A"
+
+        if (place.description != null) {
+            tvDescription.text = place.description
+        } else {
+            tvDescription.visibility = View.GONE
+        }
+
+        if (place.tel != null) {
+            tvTel.text = place.tel
+        } else {
+            tvTel.visibility = View.GONE
+        }
     }
 }

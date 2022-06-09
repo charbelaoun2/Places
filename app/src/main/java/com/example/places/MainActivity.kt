@@ -2,33 +2,34 @@ package com.example.places
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import com.example.places.databinding.ActivityMainBinding
+
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        supportFragmentManager.beginTransaction().apply {
-            replace(R.id.frame_layout, ListFragment())
-            commit()
-        }
+        loadFragment(ListFragment(), "list fragment")
 
         binding.listButton.setOnClickListener {
-            supportFragmentManager.beginTransaction().apply {
-                replace(R.id.frame_layout, ListFragment(), "list fragment")
-                commit()
-            }
+            loadFragment(ListFragment(), "list fragment")
         }
 
         binding.mapButton.setOnClickListener {
-            supportFragmentManager.beginTransaction().apply {
-                replace(R.id.frame_layout, MapFragment(), "Map Fragment")
-                commit()
-            }
+            loadFragment(MapFragment(), "map fragment")
+        }
+    }
+
+    private fun loadFragment(fragment: Fragment, tag: String) {
+        supportFragmentManager.beginTransaction().apply {
+            replace(R.id.frame_layout, fragment, tag)
+            commit()
         }
     }
 }
