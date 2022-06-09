@@ -40,9 +40,7 @@ class MapFragment : Fragment(R.layout.map_fragment), OnMapReadyCallback {
     override fun onMapReady(p0: GoogleMap) {
         p0.let {
             googleMap = it
-            val location1 = LatLng(33.888630,35.495480)
-            googleMap.addMarker(MarkerOptions().position(location1).title("My location"))
-            googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(location1,10f))
+           
         }
     }
 
