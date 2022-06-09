@@ -1,6 +1,5 @@
 package com.example.places
 
-import androidx.lifecycle.MutableLiveData
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Headers

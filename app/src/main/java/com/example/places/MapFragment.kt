@@ -8,11 +8,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.example.places.databinding.MapFragmentBinding
 import com.example.places.viewmodels.PlacesViewModel
-import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
-import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.MarkerOptions
 
 class MapFragment : Fragment(R.layout.map_fragment), OnMapReadyCallback {
     private var binding: MapFragmentBinding? = null
@@ -40,7 +37,7 @@ class MapFragment : Fragment(R.layout.map_fragment), OnMapReadyCallback {
     override fun onMapReady(p0: GoogleMap) {
         p0.let {
             googleMap = it
-           
+
         }
     }
 
