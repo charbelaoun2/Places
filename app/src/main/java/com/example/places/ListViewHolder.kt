@@ -20,12 +20,14 @@ class ListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         tvEmail.text = place.email ?: "N/A"
 
         if (place.description != null) {
+            tvDescription.visibility = View.VISIBLE
             tvDescription.text = place.description
         } else {
             tvDescription.visibility = View.GONE
         }
 
         if (place.tel != null) {
+            tvDescription.visibility = View.VISIBLE
             tvTel.text = place.tel
         } else {
             tvTel.visibility = View.GONE
