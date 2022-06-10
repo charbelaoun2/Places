@@ -44,6 +44,10 @@ class MapFragment : Fragment(R.layout.map_fragment), OnMapReadyCallback {
                 markerPlaces(places)
             })
 
+            viewModel.selectedPlace.observe(this, { place ->
+                marketPlace(place)
+            })
+
         }
     }
 
@@ -57,6 +61,16 @@ class MapFragment : Fragment(R.layout.map_fragment), OnMapReadyCallback {
 
         }
 
+    }
+
+    fun marketPlace(place: Place) {
+        if (place.latitude != null && place.longitude != null) {
+            val location = LatLng(place.latitude.toDouble(), place.longitude.toDouble())
+            googleMap.addMarker(MarkerOptions().position(location))
+            googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(location, 50f))
+
+
+        }
     }
 
 }

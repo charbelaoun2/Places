@@ -10,8 +10,9 @@ import kotlinx.coroutines.launch
 class PlacesViewModel : ViewModel() {
 
     var placesLiveData = MutableLiveData<List<Place>>()
+    var selectedPlace = MutableLiveData<Place>()
 
-    fun getPlaces(){
+    fun getPlaces() {
 
         viewModelScope.launch {
             val response = RetrofitInstance.api.getPlaces("41.8781,-87.6298", 9999)
@@ -20,7 +21,12 @@ class PlacesViewModel : ViewModel() {
                 Place(
                     it.fsq_id,
                     it.name,
-                    it.location.address, "url", it.email, it.description, it.tel,it.geocodes.main.latitude,
+                    it.location.address,
+                    "url",
+                    it.email,
+                    it.description,
+                    it.tel,
+                    it.geocodes.main.latitude,
                     it.geocodes.main.longitude
                 )
             } ?: listOf()

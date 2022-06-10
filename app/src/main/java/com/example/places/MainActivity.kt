@@ -29,6 +29,11 @@ class MainActivity : AppCompatActivity() {
         binding.mapButton.setOnClickListener {
             loadFragment(MapFragment(), "map fragment")
         }
+
+        viewModel.selectedPlace.observe(this, { place ->
+            loadFragment(MapFragment(), "map fragment")
+
+        })
     }
 
     private fun loadFragment(fragment: Fragment, tag: String) {
@@ -36,5 +41,8 @@ class MainActivity : AppCompatActivity() {
             replace(R.id.frame_layout, fragment, tag)
             commit()
         }
+
     }
+
+
 }
