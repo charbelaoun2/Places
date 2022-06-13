@@ -49,11 +49,11 @@ class MapFragment : Fragment(R.layout.map_fragment), OnMapReadyCallback {
     }
 
     fun markerPlaces(placesList: List<Place>) {
-        for (places in placesList) {
-            if (places.latitude != null && places.longitude != null) {
-                val location = LatLng(places.latitude.toDouble(), places.longitude.toDouble())
+        for (place in placesList) {
+            if (place.latitude != null && place.longitude != null) {
+                val location = LatLng(place.latitude.toDouble(), place.longitude.toDouble())
                 googleMap.addMarker(MarkerOptions().position(location))
-                googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(location, 10f))
+                zoomPlace(place)
             }
         }
 
