@@ -8,7 +8,7 @@ data class Place(
     val email: String?,
     val description: String?,
     val tel: String?,
-    val latitude : String?,
-    val longitude : String?,
+    val latitude : String,
+    val longitude : String,
 )
 
