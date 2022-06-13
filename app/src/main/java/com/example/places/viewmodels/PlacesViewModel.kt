@@ -7,7 +7,6 @@ import com.example.places.Place
 import com.example.places.RetrofitInstance
 import kotlinx.coroutines.launch
 
-
 class PlacesViewModel : ViewModel() {
 
     var placesLiveData = MutableLiveData<List<Place>>()
@@ -19,8 +18,10 @@ class PlacesViewModel : ViewModel() {
 
             val list = response.body()?.results?.map {
                 Place(
+                    it.fsq_id,
                     it.name,
-                    it.location.address, "url", it.email, it.description, it.tel
+                    it.location.address, "url", it.email, it.description, it.tel,it.geocodes.main.latitude,
+                    it.geocodes.main.longitude
                 )
             } ?: listOf()
 

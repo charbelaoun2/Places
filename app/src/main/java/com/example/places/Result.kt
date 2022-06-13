@@ -5,6 +5,8 @@ data class PlaceResponse(
 )
 
 data class Result(
+    val fsq_id : String,
+    val geocodes : Geocodes,
     val categories: List<Category>,
     val name : String,
     val email: String,
@@ -19,4 +21,13 @@ data class Category(
 
 data class Location(
     val address: String
+)
+
+data class Geocodes(
+    val main : Main,
+)
+
+data class Main(
+    val latitude : String,
+    val longitude : String
 )
