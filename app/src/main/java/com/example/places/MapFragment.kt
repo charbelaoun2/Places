@@ -28,7 +28,6 @@ class MapFragment : Fragment(R.layout.map_fragment), OnMapReadyCallback {
         return binding?.root
     }
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding?.mapView?.onCreate(savedInstanceState)
@@ -40,14 +39,12 @@ class MapFragment : Fragment(R.layout.map_fragment), OnMapReadyCallback {
     override fun onMapReady(p0: GoogleMap) {
         p0.let {
             googleMap = it
-            viewModel.placesLiveData.observe(this, { places ->
+            viewModel.placesLiveData.observe(this) { places ->
                 markerPlaces(places)
-            })
-
-            viewModel.selectedPlace.observe(this, { place ->
-                marketPlace(place)
-            })
-
+            }
+            viewModel.selectedPlace.observe(this) { place ->
+                zoomPlace(place)
+            }
         }
     }
 
@@ -58,18 +55,14 @@ class MapFragment : Fragment(R.layout.map_fragment), OnMapReadyCallback {
                 googleMap.addMarker(MarkerOptions().position(location))
                 googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(location, 10f))
             }
-
         }
 
     }
 
-    fun marketPlace(place: Place) {
+    fun zoomPlace(place: Place) {
         if (place.latitude != null && place.longitude != null) {
             val location = LatLng(place.latitude.toDouble(), place.longitude.toDouble())
-            googleMap.addMarker(MarkerOptions().position(location))
             googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(location, 50f))
-
-
         }
     }
 

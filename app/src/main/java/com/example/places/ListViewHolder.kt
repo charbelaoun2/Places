@@ -13,8 +13,6 @@ class ListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     private val tvDescription = itemView.findViewById<TextView>(R.id.description_text_view)
     private val tvTel = itemView.findViewById<TextView>(R.id.tel_text_view)
 
-
-
     fun setItem(place: Place) {
         tvName.text = place.name ?: "N/A"
         tvEmail.text = place.email ?: "N/A"

@@ -8,7 +8,6 @@ import com.example.places.RetrofitInstance
 import kotlinx.coroutines.launch
 
 class PlacesViewModel : ViewModel() {
-
     var placesLiveData = MutableLiveData<List<Place>>()
     var selectedPlace = MutableLiveData<Place>()
 
