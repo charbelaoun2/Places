@@ -26,24 +26,26 @@
 
         <Button
             android:id="@+id/list_button"
-            android:backgroundTint="@color/purple_700"
             android:layout_width="wrap_content"
-            android:textColor="@color/black"
             android:layout_height="wrap_content"
             android:layout_marginEnd="25dp"
+            android:backgroundTint="@color/purple_700"
             android:text="@string/list"
             android:textAllCaps="false"
-            android:textStyle="bold" />
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            app:icon="@drawable/list_icon" />
 
         <Button
             android:id="@+id/map_button"
-            android:textColor="@color/black"
-            android:backgroundTint="@color/purple_700"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textStyle="normal"
+            android:backgroundTint="@color/purple_700"
+            android:text="@string/map"
             android:textAllCaps="false"
-            android:text="@string/map" />
+            android:textColor="@color/white"
+            android:textStyle="normal"
+            app:icon="@drawable/map_icon" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
