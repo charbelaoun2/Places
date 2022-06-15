@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.places.databinding.ListFragmentBinding
 import com.example.places.viewmodels.PlacesViewModel
 
-class ListFragment : Fragment(R.layout.list_fragment) {
+class ListFragment : Fragment(R.layout.list_fragment), ListAdapter.OnItemClickListener {
     private var binding: ListFragmentBinding? = null
     private val viewModel by activityViewModels<PlacesViewModel>()
 
@@ -26,16 +26,15 @@ class ListFragment : Fragment(R.layout.list_fragment) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.placesLiveData.observe(viewLifecycleOwner, { places ->
+        viewModel.placesLiveData.observe(viewLifecycleOwner) { places ->
             setupAdapter(places)
-        })
+        }
     }
 
     fun setupAdapter(placesList: List<Place>) {
         val listAdapter = ListAdapter(
-            placesList
+            placesList, this
         )
-
         binding?.placesRecyclerView?.adapter = listAdapter
         binding?.placesRecyclerView?.layoutManager = LinearLayoutManager(context)
     }
@@ -43,5 +42,9 @@ class ListFragment : Fragment(R.layout.list_fragment) {
     override fun onDestroyView() {
         super.onDestroyView()
         binding = null
+    }
+
+    override fun onItemClick(place: Place) {
+        viewModel.selectedPlace.value = place
     }
 }

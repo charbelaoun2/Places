@@ -4,7 +4,6 @@ package com.example.places
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-
 object RetrofitInstance {
     val api: PlaceApi by lazy {
         Retrofit.Builder()
