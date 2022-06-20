@@ -48,11 +48,12 @@ class MapFragment : Fragment(R.layout.map_fragment), OnMapReadyCallback {
             }
         }
     }
-    fun markerPlaces(placesList: List<Place>) {
+    private fun markerPlaces(placesList: List<Place>) {
+        val locationFirstPlace = LatLng(placesList.get(0).latitude.toDouble(),placesList.get(0).longitude.toDouble())
+        zoomPlace(locationFirstPlace)
         for (place in placesList) {
             val location = LatLng(place.latitude.toDouble(),place.longitude.toDouble())
             googleMap.addMarker(MarkerOptions().position(location))
-            zoomPlace(location)
         }
     }
 

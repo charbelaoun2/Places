@@ -35,15 +35,6 @@ class ListFragment : Fragment(R.layout.list_fragment), ListAdapter.OnItemClickLi
         viewModel.placesLiveData.observe(viewLifecycleOwner) { places ->
             setupAdapter(places) }
 
-        viewModel.placesLiveData.observe(viewLifecycleOwner) { places ->
-            for (place in places) {
-              Glide.with(this)
-                  .load(place.imageUrl)
-                  .override(600,600)
-                  .into(binding2.placeImageView)
-            }
-        }
-
     }
 
     fun setupAdapter(placesList: List<Place>) {
@@ -52,7 +43,6 @@ class ListFragment : Fragment(R.layout.list_fragment), ListAdapter.OnItemClickLi
         )
         binding?.placesRecyclerView?.adapter = listAdapter
         binding?.placesRecyclerView?.layoutManager = LinearLayoutManager(context)
-        binding?.placesRecyclerView?.addItemDecoration(DividerItemDecoration(this.context,DividerItemDecoration.VERTICAL))
     }
 
     override fun onDestroyView() {

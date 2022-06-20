@@ -9,6 +9,13 @@
     android:paddingStart="8dp"
     android:paddingEnd="8dp">
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#686868"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+
     <ImageView
         android:id="@+id/place_image_view"
         android:layout_width="120dp"
