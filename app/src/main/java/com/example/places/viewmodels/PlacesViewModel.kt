@@ -30,26 +30,27 @@ class PlacesViewModel : ViewModel() {
                 }
                 placesLiveData.value = listPlace
             }
-            getPhotoApi(response)
+            if (placesResponse != null) {
+                getPhotoApi(placesResponse)
+            }
         }
     }
 
     private fun getPhotoApi(
-        response: Response<PlaceResponse>
+        placeResponse: List<Result>
     ) {
         // TODO: Check this on Thursday
         viewModelScope.launch {
             val listPhoto = mutableListOf<PhotoResponse?>()
-            val responseBody = response.body()?.results
-            if (responseBody != null) {
-                for (res in responseBody) {
+            if (placeResponse != null) {
+                for (res in placeResponse) {
                     val responsePhoto = RetrofitInstance.api_photo.getPhoto(res.fsq_id)
                     if (responsePhoto.body() != null) {
                         listPhoto.add(responsePhoto.body())
                     }
                 }
 
-                val listPlace = responseBody.map {
+                val listPlace = placeResponse.map {
                     val responsePhoto = RetrofitInstance.api_photo.getPhoto(it.fsq_id)
                     val photo = listPhoto.find { e -> e == responsePhoto.body() }
 
