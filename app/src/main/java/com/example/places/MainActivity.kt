@@ -1,8 +1,10 @@
 package com.example.places
 
 import android.os.Bundle
+import android.window.SplashScreen
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.fragment.app.Fragment
 import com.example.places.databinding.ActivityMainBinding
 import com.example.places.viewmodels.PlacesViewModel
@@ -13,6 +15,11 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        installSplashScreen().apply {
+            setKeepVisibleCondition{
+                viewModel.isLoaded.value
+            }
+        }
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         viewModel.getPlaces()
