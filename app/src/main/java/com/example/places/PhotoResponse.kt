@@ -7,5 +7,3 @@ data class ResultPhoto(
     val prefix: String,
     val suffix: String,
 )
-
-

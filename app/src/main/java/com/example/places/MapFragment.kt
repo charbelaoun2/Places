@@ -33,7 +33,11 @@ class MapFragment : Fragment(R.layout.map_fragment), OnMapReadyCallback {
         binding?.mapView?.onCreate(savedInstanceState)
         binding?.mapView?.onResume()
         binding?.mapView?.getMapAsync(this)
-
+        viewModel.selectedPlace.observe(viewLifecycleOwner) { selectedPlace ->
+            if (selectedPlace != null) {
+                showPlaceDetailsBottomSheet(selectedPlace)
+            }
+        }
     }
 
     override fun onMapReady(p0: GoogleMap) {
@@ -57,7 +61,19 @@ class MapFragment : Fragment(R.layout.map_fragment), OnMapReadyCallback {
         }
     }
 
-    fun zoomPlace(location : LatLng) {
+    private fun zoomPlace(location : LatLng) {
         googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(location, 50f))
+    }
+
+    private fun showPlaceDetailsBottomSheet(place: Place) {
+        val oldFragment = childFragmentManager.findFragmentByTag(PlaceDetailBottomSheet.TAG)
+        if (oldFragment != null) {
+            childFragmentManager.beginTransaction().remove(oldFragment).commit()
+        }
+
+        val fragment = PlaceDetailBottomSheet.newInstance(place)
+        childFragmentManager.beginTransaction()
+            .add(fragment, PlaceDetailBottomSheet.TAG)
+            .commit()
     }
 }

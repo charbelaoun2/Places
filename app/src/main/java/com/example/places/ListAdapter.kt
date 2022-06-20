@@ -12,19 +12,18 @@ class ListAdapter(
         fun onItemClick(place :Place)
     }
 
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListViewHolder {
         return ListViewHolder(
             LayoutInflater.from(parent.context).inflate(
-                R.layout.list_item, parent, false
+                R.layout.place_details, parent, false
             )
         )
     }
 
     override fun onBindViewHolder(holder: ListViewHolder, position: Int) {
-        val curcity = lists[position]
-        holder.setItem(curcity)
-        holder.itemView.setOnClickListener { listener.onItemClick(curcity) }
+        val currentCity = lists[position]
+        holder.setItem(currentCity)
+        holder.itemView.setOnClickListener { listener.onItemClick(currentCity) }
     }
 
     override fun getItemCount(): Int = lists.size
