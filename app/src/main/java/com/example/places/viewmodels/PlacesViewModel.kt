@@ -13,7 +13,6 @@ class PlacesViewModel : ViewModel() {
 
     fun getPlaces() {
         viewModelScope.launch {
-            val listPhoto = mutableListOf<PhotoResponse?>()
             val response = RetrofitInstance.api.getPlaces("41.8781,-87.6298", 9999)
             val placesResponse = response.body()?.results
             if (placesResponse != null) {
@@ -31,15 +30,16 @@ class PlacesViewModel : ViewModel() {
                 }
                 placesLiveData.value = listPlace
             }
-            getPhotoApi(listPhoto, response)
+            getPhotoApi(response)
         }
     }
 
     private fun getPhotoApi(
-        listPhoto: MutableList<PhotoResponse?>,
         response: Response<PlaceResponse>
     ) {
+        // TODO: Check this on Thursday
         viewModelScope.launch {
+            val listPhoto = mutableListOf<PhotoResponse?>()
             val responseBody = response.body()?.results
             if (responseBody != null) {
                 for (res in responseBody) {
