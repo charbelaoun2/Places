@@ -13,8 +13,6 @@ import retrofit2.Response
 class PlacesViewModel : ViewModel() {
     var placesLiveData = MutableLiveData<List<Place>>()
     var selectedPlace = MutableLiveData<Place>()
-    private var _isLoaded = MutableStateFlow(true)
-    val isLoaded = _isLoaded.asStateFlow()
 
     fun getPlaces() {
         viewModelScope.launch {
@@ -35,7 +33,6 @@ class PlacesViewModel : ViewModel() {
                     )
                 }
                 placesLiveData.value = listPlace
-               _isLoaded.value = false
             }
             getPhotoApi(listPhoto, response)
         }

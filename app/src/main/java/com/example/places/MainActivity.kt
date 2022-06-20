@@ -17,7 +17,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         installSplashScreen().apply {
             setKeepVisibleCondition{
-                viewModel.isLoaded.value
+                viewModel.placesLiveData.value==null
             }
         }
         binding = ActivityMainBinding.inflate(layoutInflater)
