@@ -40,7 +40,6 @@ class ListFragment : Fragment(R.layout.list_fragment), ListAdapter.OnItemClickLi
         )
         binding?.placesRecyclerView?.adapter = listAdapter
         binding?.placesRecyclerView?.layoutManager = LinearLayoutManager(context)
-        binding?.placesRecyclerView?.addItemDecoration(DividerItemDecoration(this.context,DividerItemDecoration.VERTICAL))
     }
 
     override fun onDestroyView() {
