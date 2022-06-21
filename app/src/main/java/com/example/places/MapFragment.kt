@@ -17,7 +17,7 @@ import com.google.android.gms.maps.model.MarkerOptions
 class MapFragment : Fragment(R.layout.map_fragment), OnMapReadyCallback {
     private var binding: MapFragmentBinding? = null
     private val viewModel by activityViewModels<PlacesViewModel>()
-    lateinit var googleMap: GoogleMap
+    private lateinit var googleMap: GoogleMap
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -47,13 +47,13 @@ class MapFragment : Fragment(R.layout.map_fragment), OnMapReadyCallback {
                 markerPlaces(places)
             }
             viewModel.selectedPlace.observe(this) { place ->
-                var location = LatLng(place.latitude.toDouble(),place.longitude.toDouble())
+                val location = LatLng(place.latitude.toDouble(),place.longitude.toDouble())
                 zoomPlace(location)
             }
         }
     }
     private fun markerPlaces(placesList: List<Place>) {
-        val locationFirstPlace = LatLng(placesList.get(0).latitude.toDouble(),placesList.get(0).longitude.toDouble())
+        val locationFirstPlace = LatLng(placesList[0].latitude.toDouble(), placesList[0].longitude.toDouble())
         zoomPlace(locationFirstPlace)
         for (place in placesList) {
             val location = LatLng(place.latitude.toDouble(),place.longitude.toDouble())
