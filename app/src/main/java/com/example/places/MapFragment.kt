@@ -56,7 +56,10 @@ class MapFragment : Fragment(R.layout.map_fragment), OnMapReadyCallback {
         val locationFirstPlace = LatLng(placesList[0].latitude.toDouble(), placesList[0].longitude.toDouble())
         zoomPlace(locationFirstPlace)
         for (place in placesList) {
-            val location = LatLng(place.latitude.toDouble(),place.longitude.toDouble())
+            val location = LatLng(
+                place.latitude.toDouble(),
+                place.longitude.toDouble()
+            )
             googleMap.addMarker(MarkerOptions().position(location))
         }
     }
