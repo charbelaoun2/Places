@@ -27,6 +27,4 @@ class ListAdapter(
     }
 
     override fun getItemCount(): Int = lists.size
-
-
 }
