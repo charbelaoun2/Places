@@ -19,5 +19,5 @@
         android:layout_height="match_parent"
         tools:listitem="@layout/place_details" >
     </androidx.recyclerview.widget.RecyclerView>
-    
+
 </LinearLayout>
