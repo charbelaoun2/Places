@@ -15,7 +15,7 @@ import com.example.places.viewmodels.PlacesViewModel
 class ListFragment : Fragment(R.layout.list_fragment), ListAdapter.OnItemClickListener {
     private var binding: ListFragmentBinding? = null
     private lateinit var binding2: PlaceDetailsBinding
-    lateinit var listAdapter: ListAdapter
+    private lateinit var listAdapter: ListAdapter
     private val viewModel by activityViewModels<PlacesViewModel>()
 
     override fun onCreateView(

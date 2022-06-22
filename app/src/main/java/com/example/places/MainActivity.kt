@@ -1,5 +1,10 @@
 package com.example.places
 
+import android.app.AlertDialog
+import android.content.Context
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
+import android.os.Build
 import android.os.Bundle
 import android.window.SplashScreen
 import androidx.activity.viewModels
@@ -17,9 +22,20 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         installSplashScreen().apply {
             setKeepVisibleCondition{
-                viewModel.placesLiveData.value==null
+               viewModel.exceptionCatched.value==false
             }
         }
+
+        viewModel.exceptionCatched.observe(this) {
+            val builder = AlertDialog.Builder(this)
+            builder.setTitle("Check your internet connection !")
+            builder.setMessage("Enable to fetch Api data due to internet connection Problems ")
+            builder.setIcon(R.drawable.ic_baseline_wifi_off_24)
+            builder.setPositiveButton("Cancel") { dialog, _ -> dialog.dismiss() }
+            builder.show()
+
+        }
+
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         viewModel.getPlaces()
@@ -45,4 +61,5 @@ class MainActivity : AppCompatActivity() {
             commit()
         }
     }
+
 }
