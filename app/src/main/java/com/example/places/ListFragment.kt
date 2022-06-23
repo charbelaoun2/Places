@@ -31,6 +31,7 @@ class ListFragment : Fragment(R.layout.list_fragment), ListAdapter.OnItemClickLi
         super.onViewCreated(view, savedInstanceState)
         viewModel.placesLiveData.observe(viewLifecycleOwner) { places ->
             setupAdapter(places)
+            print("test 1")
         }
     }
 
