@@ -1,25 +1,26 @@
 package com.example.places
 
 import android.app.AlertDialog
-import android.content.Context
-import android.net.ConnectivityManager
-import android.net.NetworkCapabilities
-import android.os.Build
 import android.os.Bundle
-import android.window.SplashScreen
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.fragment.app.Fragment
 import com.example.places.databinding.ActivityMainBinding
 import com.example.places.viewmodels.PlacesViewModel
+import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.analytics.ktx.analytics
+import com.google.firebase.analytics.ktx.logEvent
+import com.google.firebase.ktx.Firebase
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
+    private lateinit var firebaseAnalytics: FirebaseAnalytics
     private val viewModel by viewModels<PlacesViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        firebaseAnalytics = Firebase.analytics
         installSplashScreen().apply {
             setKeepVisibleCondition{
                viewModel.exceptionCatched.value==false
@@ -35,17 +36,18 @@ class MainActivity : AppCompatActivity() {
             builder.show()
 
         }
-
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         viewModel.getPlaces()
         loadFragment(ListFragment(), "list fragment")
 
         binding.listButton.setOnClickListener {
+            firebaseAnalytics.logEvent(Analytics.LIST_BUTTON_CLICK) {}
             loadFragment(ListFragment(), "list fragment")
         }
 
         binding.mapButton.setOnClickListener {
+            firebaseAnalytics.logEvent(Analytics.MAP_BUTTON_CLICK) {}
             loadFragment(MapFragment(), "map fragment")
         }
 

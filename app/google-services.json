@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "663163610119",
+    "project_id": "places-352809",
+    "storage_bucket": "places-352809.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:663163610119:android:0ee2626c28a337ecb436a2",
+        "android_client_info": {
+          "package_name": "com.example.places"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "663163610119-ko0bth4ijntld16m6sf50mquu5gshk8n.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyANIsNhL1yYJSGdgh1DBkX-B2oPdCruG0Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "663163610119-ko0bth4ijntld16m6sf50mquu5gshk8n.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
