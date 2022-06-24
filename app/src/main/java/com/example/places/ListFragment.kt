@@ -4,10 +4,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.afollestad.materialdialogs.MaterialDialog
+import com.afollestad.materialdialogs.customview.customView
 import com.example.places.databinding.ListFragmentBinding
 import com.example.places.databinding.PlaceDetailsBinding
 import com.example.places.viewmodels.PlacesViewModel
@@ -38,6 +41,9 @@ class ListFragment : Fragment(R.layout.list_fragment), ListAdapter.OnItemClickLi
         firebaseAnalytics = Firebase.analytics
         viewModel.placesLiveData.observe(viewLifecycleOwner) { places ->
             setupAdapter(places)
+        }
+        binding?.filterButton?.setOnClickListener{
+            showFilterDialog()
         }
         binding?.nameSearch?.setOnQueryTextListener(object : SearchView.OnQueryTextListener,
             androidx.appcompat.widget.SearchView.OnQueryTextListener {
@@ -93,5 +99,17 @@ class ListFragment : Fragment(R.layout.list_fragment), ListAdapter.OnItemClickLi
             }
         }
         viewModel.selectedPlace.value = place
+    }
+
+    fun showFilterDialog() {
+        val dialog = MaterialDialog(requireContext())
+            .noAutoDismiss()
+            .customView(R.layout.layout_filter)
+
+        dialog.show()
+
+        dialog.findViewById<Button>(R.id.negative_button).setOnClickListener {
+            dialog.dismiss()
+        }
     }
 }
