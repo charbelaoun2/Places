@@ -14,21 +14,29 @@
         android:text="@string/choose_the_options_you_want" />
 
     <EditText
+        android:id="@+id/min_price_id"
+        android:inputType="number"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:hint="Min Price (eg: between 1 and 4)" />
 
     <EditText
+        android:id="@+id/max_price_id"
+        android:inputType="number"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:hint="Max Price (eg: between 1 and 4)" />
 
     <EditText
+        android:id="@+id/open_at_id"
+        android:inputType="text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:hint="Open At (e.g ,1T2130)" />
 
     <EditText
+        android:id="@+id/limit_id"
+        android:inputType="number"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:hint="Limit (up to 50. Defaults to 10)" />
@@ -38,7 +46,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:orientation="vertical"
-        android:id="@+id/filter_group">
+        android:id="@+id/filter_sort">
 
         <TextView
             android:layout_width="wrap_content"
@@ -129,5 +137,6 @@
             android:backgroundTint="@color/purple_700" />
 
     </LinearLayout>
+
 
 </LinearLayout>

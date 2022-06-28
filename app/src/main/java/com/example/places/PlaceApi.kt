@@ -11,9 +11,16 @@ interface PlaceApi {
     @GET("v3/places/search")
     suspend fun getPlaces(
         @Query("ll") ll: String,
-        @Query("radius") radius: Int
+        @Query("radius") radius: Int,
+        @Query("min_price") min_price: Int?,
+        @Query("max_price") max_price : Int?,
+        @Query("limit") limit :Int?,
+        @Query("open_at") open_at :String?,
+        @Query("open_now") open_now :Boolean?,
+        @Query("sort") sort : String?
     ): Response<PlaceResponse>
 }
+
 
 interface PhotoApi {
     @Headers("Authorization:${BuildConfig.FOUR_SQUARE_API}")

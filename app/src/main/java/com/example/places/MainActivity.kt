@@ -37,7 +37,7 @@ class MainActivity : AppCompatActivity() {
         }
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        viewModel.getPlaces()
+        viewModel.getPlaces(null,null,null,null,null,null)
         loadFragment(ListFragment(), "list fragment")
 
         binding.listButton.setOnClickListener {

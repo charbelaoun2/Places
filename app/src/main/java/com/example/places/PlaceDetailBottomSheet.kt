@@ -46,6 +46,7 @@ class PlaceDetailBottomSheet : BottomSheetDialogFragment() {
             binding.telTextView.text = place.tel
             Glide.with(this)
                 .load(place.imageUrl)
+                .placeholder(R.drawable.image_placeholder)
                 .into(binding.placeImageView)
         }
     }
