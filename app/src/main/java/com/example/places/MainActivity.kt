@@ -50,7 +50,7 @@ class MainActivity : AppCompatActivity() {
             loadFragment(MapFragment(), "map fragment")
         }
 
-        viewModel.selectedPlace.observe(this) { place ->
+        viewModel.selectedPlace.observe(this) {
             loadFragment(MapFragment(), "map fragment")
 
         }

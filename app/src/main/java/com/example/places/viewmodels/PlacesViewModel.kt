@@ -52,34 +52,32 @@ class PlacesViewModel : ViewModel() {
         viewModelScope.launch {
             try {
                 val listPhoto = mutableListOf<PhotoResponse?>()
-                if (placeResponse != null) {
-                    for (res in placeResponse) {
-                        val responsePhoto = RetrofitInstance.api_photo.getPhoto(res.fsq_id)
-                        if (responsePhoto.body() != null) {
-                            listPhoto.add(responsePhoto.body())
-                        }
+                for (res in placeResponse) {
+                    val responsePhoto = RetrofitInstance.api_photo.getPhoto(res.fsq_id)
+                    if (responsePhoto.body() != null) {
+                        listPhoto.add(responsePhoto.body())
                     }
-                    val listPlace = placeResponse.map {
-                        val responsePhoto = RetrofitInstance.api_photo.getPhoto(it.fsq_id)
-                        val photo = listPhoto.find { e -> e == responsePhoto.body() }
+                }
+                val listPlace = placeResponse.map {
+                    val responsePhoto = RetrofitInstance.api_photo.getPhoto(it.fsq_id)
+                    val photo = listPhoto.find { e -> e == responsePhoto.body() }
 
-                        Place(
-                            it.fsq_id,
-                            it.name,
-                            it.location.address,
-                            it.email,
-                            it.description,
-                            it.tel,
-                            it.geocodes.main.latitude,
-                            it.geocodes.main.longitude,
-                            photo?.get(0)?.prefix + "original" + photo?.get(0)?.suffix,
-                        )
-
-                    }
-                    placesLiveData.value = listPlace
+                    Place(
+                        it.fsq_id,
+                        it.name,
+                        it.location.address,
+                        it.email,
+                        it.description,
+                        it.tel,
+                        it.geocodes.main.latitude,
+                        it.geocodes.main.longitude,
+                        photo?.get(0)?.prefix + "original" + photo?.get(0)?.suffix,
+                    )
 
                 }
-            } catch (excpetion : IndexOutOfBoundsException) {
+                placesLiveData.value = listPlace
+
+            } catch (exception : IndexOutOfBoundsException) {
 
             }
         }
