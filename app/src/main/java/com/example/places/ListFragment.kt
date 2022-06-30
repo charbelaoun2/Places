@@ -8,8 +8,6 @@ import android.widget.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.afollestad.materialdialogs.MaterialDialog
-import com.afollestad.materialdialogs.customview.customView
 import com.example.places.databinding.LayoutFilterBinding
 import com.example.places.databinding.ListFragmentBinding
 import com.example.places.databinding.PlaceDetailsBinding
@@ -44,9 +42,10 @@ class ListFragment : Fragment(R.layout.list_fragment), ListAdapter.OnItemClickLi
         firebaseAnalytics = Firebase.analytics
         viewModel.placesLiveData.observe(viewLifecycleOwner) { places ->
             setupAdapter(places)
+            updateRecyclerView(places)
         }
         binding?.filterButton?.setOnClickListener {
-            showFilterDialog()
+            showFilterDialogFragment()
         }
         binding?.nameSearch?.setOnQueryTextListener(object : SearchView.OnQueryTextListener,
             androidx.appcompat.widget.SearchView.OnQueryTextListener {
@@ -103,73 +102,15 @@ class ListFragment : Fragment(R.layout.list_fragment), ListAdapter.OnItemClickLi
         viewModel.selectedPlace.value = place
     }
 
-
-    private fun showFilterDialog() {
-        val dialog = MaterialDialog(requireContext())
-            .noAutoDismiss()
-            .customView(R.layout.layout_filter)
-
-        dialog.findViewById<Button>(R.id.negative_button).setOnClickListener {
-            dialog.dismiss()
+    private fun showFilterDialogFragment() {
+        val oldFragment = childFragmentManager.findFragmentByTag(PlaceDetailBottomSheet.TAG)
+        if (oldFragment != null) {
+            childFragmentManager.beginTransaction().remove(oldFragment).commit()
         }
 
-        dialog.findViewById<Button>(R.id.positive_button).setOnClickListener {
-            val minPriceInput = dialog.findViewById<EditText>(R.id.min_price_id).text.toString()
-            val maxPriceInput = dialog.findViewById<EditText>(R.id.max_price_id).text.toString()
-            val limitInput = dialog.findViewById<EditText>(R.id.limit_id).text.toString()
-            val openAtInput = dialog.findViewById<EditText>(R.id.open_at_id).text.toString()
-            val radioGroupSort = dialog.findViewById<RadioGroup>(R.id.filter_sort)
-            val radioGroupOpenNow = dialog.findViewById<RadioGroup>(R.id.filter_open_now)
-            if (radioGroupSort.checkedRadioButtonId != -1 && radioGroupOpenNow.checkedRadioButtonId == -1) {
-                val radioButtonSort =
-                    radioGroupSort.findViewById<View>(radioGroupSort.checkedRadioButtonId) as RadioButton
-                viewModel.getPlaces(
-                    minPriceInput.toIntOrNull(),
-                    maxPriceInput.toIntOrNull(),
-                    limitInput.toIntOrNull(),
-                    openAtInput,
-                    null,
-                    radioButtonSort.text.toString()
-                )
-            } else if (radioGroupSort.checkedRadioButtonId != -1 && radioGroupOpenNow.checkedRadioButtonId != -1) {
-                val radioButtonSort =
-                    radioGroupSort.findViewById<View>(radioGroupSort.checkedRadioButtonId) as RadioButton
-                val radioButtonOpenNow =
-                    radioGroupOpenNow.findViewById<View>(radioGroupOpenNow.checkedRadioButtonId) as RadioButton
-                viewModel.getPlaces(
-                    minPriceInput.toIntOrNull(),
-                    maxPriceInput.toIntOrNull(),
-                    limitInput.toIntOrNull(),
-                    openAtInput,
-                    radioButtonOpenNow.text.toString().toBoolean(),
-                    radioButtonSort.text.toString()
-                )
-            } else if (radioGroupSort.checkedRadioButtonId == -1 && radioGroupOpenNow.checkedRadioButtonId != -1) {
-                val radioButtonOpenNow: RadioButton =
-                    radioGroupOpenNow.findViewById<View>(radioGroupOpenNow.checkedRadioButtonId) as RadioButton
-                viewModel.getPlaces(
-                    minPriceInput.toIntOrNull(),
-                    maxPriceInput.toIntOrNull(),
-                    limitInput.toIntOrNull(),
-                    openAtInput,
-                    radioButtonOpenNow.text.toString().toBoolean(),
-                    null
-                )
-            } else {
-                viewModel.getPlaces(
-                    minPriceInput.toIntOrNull(),
-                    maxPriceInput.toIntOrNull(),
-                    limitInput.toIntOrNull(),
-                    openAtInput,
-                    null,
-                    null
-                )
-            }
-            viewModel.placesLiveData.observe(viewLifecycleOwner) { list ->
-                updateRecyclerView(list)
-            }
-            dialog.dismiss()
-        }
-        dialog.show()
+        val fragment = FilterDialogFragment.newInstance()
+        childFragmentManager.beginTransaction()
+            .add(fragment, FilterDialogFragment.TAG)
+            .commit()
     }
 }

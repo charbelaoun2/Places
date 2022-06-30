@@ -78,7 +78,7 @@ class PlacesViewModel : ViewModel() {
                 placesLiveData.value = listPlace
 
             } catch (exception : IndexOutOfBoundsException) {
-
+                print("test")
             }
         }
     }
