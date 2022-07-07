@@ -22,6 +22,7 @@ class ListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         Glide.with(itemView.context)
             .load(place.imageUrl)
+            .placeholder(R.drawable.image_placeholder)
             .into(ivPlace)
 
         if (place.description != null) {

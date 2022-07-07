@@ -20,7 +20,7 @@ class PlaceDetailBottomSheet : BottomSheetDialogFragment() {
             val fragment = PlaceDetailBottomSheet()
             val args = Bundle()
             fragment.arguments=args
-            args?.putParcelable(PLACE_ARGUMENT, place)
+            args.putParcelable(PLACE_ARGUMENT, place)
             return fragment
         }
     }
@@ -29,10 +29,10 @@ class PlaceDetailBottomSheet : BottomSheetDialogFragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         super.onCreateView(inflater, container, savedInstanceState)
         binding = PlaceDetailsBinding.inflate(inflater,container,false)
-        return binding?.root
+        return binding.root
 
     }
 
@@ -46,6 +46,7 @@ class PlaceDetailBottomSheet : BottomSheetDialogFragment() {
             binding.telTextView.text = place.tel
             Glide.with(this)
                 .load(place.imageUrl)
+                .placeholder(R.drawable.image_placeholder)
                 .into(binding.placeImageView)
         }
     }
