@@ -26,7 +26,6 @@ class MainActivity : AppCompatActivity() {
                viewModel.exceptionCatched.value==false
             }
         }
-
         viewModel.exceptionCatched.observe(this) {
             val builder = AlertDialog.Builder(this)
             builder.setTitle("Check your internet connection !")

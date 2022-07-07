@@ -60,9 +60,19 @@ class MapFragment : Fragment(R.layout.map_fragment), OnMapReadyCallback {
                 place.latitude.toDouble(),
                 place.longitude.toDouble()
             )
-            googleMap.addMarker(MarkerOptions().position(location))
+            val marker = googleMap.addMarker(MarkerOptions().position(location))
+            marker?.tag = place.fsq_id
+        }
+
+        googleMap.setOnMarkerClickListener { marker ->
+            val selectedPlace = placesList.find { it.fsq_id == marker.tag }
+            if (selectedPlace != null) {
+                showPlaceDetailsBottomSheet(selectedPlace)
+            }
+            return@setOnMarkerClickListener false
         }
     }
+
 
     private fun zoomPlace(location : LatLng) {
         googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(location, 50f))
@@ -79,4 +89,6 @@ class MapFragment : Fragment(R.layout.map_fragment), OnMapReadyCallback {
             .add(fragment, PlaceDetailBottomSheet.TAG)
             .commit()
     }
+
+
 }
