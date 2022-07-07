@@ -1,17 +1,13 @@
 package com.example.places
 
-import android.graphics.Canvas
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
-import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -23,17 +19,17 @@ import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.ktx.analytics
 import com.google.firebase.analytics.ktx.logEvent
 import com.google.firebase.ktx.Firebase
+import kotlinx.coroutines.launch
 
 
 class ListFragment : Fragment(R.layout.list_fragment), ListAdapter.OnItemClickListener {
     private var binding: ListFragmentBinding? = null
     private lateinit var binding3: LayoutFilterBinding
     private lateinit var binding2: PlaceDetailsBinding
-    private var swipeBackground : ColorDrawable = ColorDrawable(Color.parseColor("#0371C9"))
-    private lateinit var saveIcon : Drawable
     private lateinit var listAdapter: ListAdapter
     private lateinit var firebaseAnalytics: FirebaseAnalytics
     private val viewModel by activityViewModels<PlacesViewModel>()
+    private lateinit var placeDao: PlaceDao
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -49,7 +45,6 @@ class ListFragment : Fragment(R.layout.list_fragment), ListAdapter.OnItemClickLi
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         firebaseAnalytics = Firebase.analytics
-        saveIcon = ContextCompat.getDrawable(requireContext(),R.drawable.ic_baseline_save_24)!!
         viewModel.placesLiveData.observe(viewLifecycleOwner) { places ->
             setupAdapter(places)
             updateRecyclerView(places)
@@ -92,45 +87,13 @@ class ListFragment : Fragment(R.layout.list_fragment), ListAdapter.OnItemClickLi
         listAdapter = ListAdapter(
             placesList, this
         )
-        val swipeToSaveCallback = object : SwipeGesture() {
+        val swipeToSaveCallback = object : SwipeGesture(requireContext()) {
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 viewHolder.adapterPosition
+                val placeSwiped = listAdapter.lists.get(viewHolder.adapterPosition)
+                insertDataToDatabase(placeSwiped)
                 listAdapter.notifyItemChanged(viewHolder.adapterPosition)
-            }
-            override fun onChildDraw(
-                c: Canvas,
-                recyclerView: RecyclerView,
-                viewHolder: RecyclerView.ViewHolder,
-                dX: Float,
-                dY: Float,
-                actionState: Int,
-                isCurrentlyActive: Boolean
-            ) {
-                val itemView = viewHolder.itemView
-                val iconMargin = (itemView.height - saveIcon.intrinsicHeight) /2
-
-
-                if (dX > 0) {
-                    swipeBackground.setBounds(itemView.left,itemView.top,dX.toInt(),itemView.bottom)
-                    saveIcon.setBounds(itemView.left + iconMargin,itemView.top + iconMargin,
-                    itemView.left + iconMargin + saveIcon.intrinsicWidth,itemView.bottom - iconMargin)
-                } else {
-                    swipeBackground.setBounds(itemView.right+dX.toInt(),itemView.top,itemView.right,itemView.bottom)
-                    saveIcon.setBounds(itemView.right - iconMargin - saveIcon.intrinsicWidth,itemView.top + iconMargin,
-                        itemView.right - iconMargin ,itemView.bottom - iconMargin)
-                }
-                swipeBackground.draw(c)
-                if ( dX >0 ) {
-                    c.clipRect(itemView.left,itemView.top,dX.toInt(),itemView.bottom)
-                } else {
-                    c.clipRect(itemView.right+dX.toInt(),itemView.top,itemView.right,itemView.bottom)
-                }
-                saveIcon.draw(c)
-                c.restore()
-
-                super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
-
             }
         }
 
@@ -168,5 +131,17 @@ class ListFragment : Fragment(R.layout.list_fragment), ListAdapter.OnItemClickLi
         childFragmentManager.beginTransaction()
             .add(fragment, FilterDialogFragment.TAG)
             .commit()
+    }
+
+    private fun insertDataToDatabase(place: Place) {
+        lifecycleScope.launch {
+            placeDao = PlaceDatabase.getDatabase(requireContext().applicationContext).placeDao()
+            placeDao.addPlace(place)
+            Toast.makeText(
+                requireContext(),
+                "Successfully added Place to Database",
+                Toast.LENGTH_LONG
+            ).show()
+        }
     }
 }

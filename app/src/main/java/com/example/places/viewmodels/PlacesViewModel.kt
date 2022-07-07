@@ -4,6 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.places.*
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.lang.IndexOutOfBoundsException
 import java.net.UnknownHostException
@@ -78,7 +79,6 @@ class PlacesViewModel : ViewModel() {
                 placesLiveData.value = listPlace
 
             } catch (exception : IndexOutOfBoundsException) {
-                print("test")
             }
         }
     }
