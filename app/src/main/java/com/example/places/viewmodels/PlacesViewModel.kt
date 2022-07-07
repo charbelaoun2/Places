@@ -4,39 +4,43 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.places.*
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import retrofit2.Response
+import java.net.UnknownHostException
 
 class PlacesViewModel : ViewModel() {
     var placesLiveData = MutableLiveData<List<Place>>()
     var selectedPlace = MutableLiveData<Place>()
+    var exceptionCatched = MutableLiveData<Boolean>()
 
     fun getPlaces() {
         viewModelScope.launch {
-            val response = RetrofitInstance.api.getPlaces("41.8781,-87.6298", 9999)
-            val placesResponse = response.body()?.results
-            if (placesResponse != null) {
-                val listPlace = placesResponse.map {
-                    Place(
-                        it.fsq_id,
-                        it.name,
-                        it.location.address,
-                        it.email,
-                        it.description,
-                        it.tel,
-                        it.geocodes.main.latitude,
-                        it.geocodes.main.longitude
-                    )
+            try {
+                val response = RetrofitInstance.api.getPlaces("41.8781,-87.6298", 9999)
+                val placesResponse = response.body()?.results
+                if (placesResponse != null) {
+                    val listPlace = placesResponse.map {
+                        Place(
+                            it.fsq_id,
+                            it.name,
+                            it.location.address,
+                            it.email,
+                            it.description,
+                            it.tel,
+                            it.geocodes.main.latitude,
+                            it.geocodes.main.longitude
+                        )
+                    }
+                    placesLiveData.value = listPlace
                 }
-                placesLiveData.value = listPlace
-            }
-            if (placesResponse != null) {
-                getPhotoApi(placesResponse)
+                if (placesResponse != null) {
+                    getPhotoApi(placesResponse)
+                }
+
+            } catch (exception: UnknownHostException) {
+                exceptionCatched.value = true
             }
         }
+
     }
 
     private fun getPhotoApi(
@@ -75,4 +79,5 @@ class PlacesViewModel : ViewModel() {
             }
         }
     }
+
 }

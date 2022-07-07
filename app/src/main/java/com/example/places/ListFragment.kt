@@ -11,11 +11,16 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.places.databinding.ListFragmentBinding
 import com.example.places.databinding.PlaceDetailsBinding
 import com.example.places.viewmodels.PlacesViewModel
+import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.analytics.ktx.analytics
+import com.google.firebase.analytics.ktx.logEvent
+import com.google.firebase.ktx.Firebase
 
 class ListFragment : Fragment(R.layout.list_fragment), ListAdapter.OnItemClickListener {
     private var binding: ListFragmentBinding? = null
     private lateinit var binding2: PlaceDetailsBinding
-    lateinit var listAdapter: ListAdapter
+    private lateinit var listAdapter: ListAdapter
+    private lateinit var firebaseAnalytics: FirebaseAnalytics
     private val viewModel by activityViewModels<PlacesViewModel>()
 
     override fun onCreateView(
@@ -30,6 +35,7 @@ class ListFragment : Fragment(R.layout.list_fragment), ListAdapter.OnItemClickLi
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        firebaseAnalytics = Firebase.analytics
         viewModel.placesLiveData.observe(viewLifecycleOwner) { places ->
             setupAdapter(places)
         }
@@ -80,6 +86,12 @@ class ListFragment : Fragment(R.layout.list_fragment), ListAdapter.OnItemClickLi
     }
 
     override fun onItemClick(place: Place) {
+        if (place.fsq_id!=null) {
+            firebaseAnalytics.logEvent(Analytics.PLACE_LIST_CLICK) {
+                param(FirebaseAnalytics.Param.ITEM_ID, place.fsq_id)
+                param(FirebaseAnalytics.Param.ITEM_NAME, place.name ?: "null")
+            }
+        }
         viewModel.selectedPlace.value = place
     }
 }
