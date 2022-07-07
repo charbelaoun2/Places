@@ -15,7 +15,7 @@ class PlacesViewModel : ViewModel() {
 
     fun insertDataToDatabase(place: Place) {
         viewModelScope.launch {
-            Repository.insertPlace(place)
+            Manager.insertPlace(place)
         }
     }
 

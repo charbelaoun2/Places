@@ -3,7 +3,7 @@ package com.example.places
 import android.content.Context
 import androidx.room.Room
 
-object Repository {
+object Manager {
 
     private lateinit var db: PlaceDatabase
 
