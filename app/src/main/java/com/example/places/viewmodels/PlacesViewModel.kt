@@ -1,10 +1,10 @@
 package com.example.places.viewmodels
 
+import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.places.*
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.lang.IndexOutOfBoundsException
 import java.net.UnknownHostException
@@ -13,6 +13,12 @@ class PlacesViewModel : ViewModel() {
     var placesLiveData = MutableLiveData<List<Place>>()
     var selectedPlace = MutableLiveData<Place>()
     var exceptionCatched = MutableLiveData<Boolean>()
+
+    fun insertDataToDatabase(place: Place) {
+        viewModelScope.launch {
+            Repository.insertPlace(place)
+        }
+    }
 
     fun getPlaces(minParam : Int?,maxPriceParam : Int?,limitParam : Int?,openAtParam : String?,openNow : Boolean?,sort : String?) {
         viewModelScope.launch {

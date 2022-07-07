@@ -29,7 +29,6 @@ class ListFragment : Fragment(R.layout.list_fragment), ListAdapter.OnItemClickLi
     private lateinit var listAdapter: ListAdapter
     private lateinit var firebaseAnalytics: FirebaseAnalytics
     private val viewModel by activityViewModels<PlacesViewModel>()
-    private lateinit var placeDao: PlaceDao
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -92,7 +91,7 @@ class ListFragment : Fragment(R.layout.list_fragment), ListAdapter.OnItemClickLi
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 viewHolder.adapterPosition
                 val placeSwiped = listAdapter.lists.get(viewHolder.adapterPosition)
-                insertDataToDatabase(placeSwiped)
+                viewModel.insertDataToDatabase(placeSwiped)
                 listAdapter.notifyItemChanged(viewHolder.adapterPosition)
             }
         }
@@ -133,15 +132,4 @@ class ListFragment : Fragment(R.layout.list_fragment), ListAdapter.OnItemClickLi
             .commit()
     }
 
-    private fun insertDataToDatabase(place: Place) {
-        lifecycleScope.launch {
-            placeDao = PlaceDatabase.getDatabase(requireContext().applicationContext).placeDao()
-            placeDao.addPlace(place)
-            Toast.makeText(
-                requireContext(),
-                "Successfully added Place to Database",
-                Toast.LENGTH_LONG
-            ).show()
-        }
-    }
 }
