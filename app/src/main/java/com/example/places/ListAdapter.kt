@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 
 class ListAdapter(
-    private val lists: List<Place>,private val listener :OnItemClickListener
+    var lists: List<Place>, private val listener :OnItemClickListener
 ) : RecyclerView.Adapter<ListViewHolder>() {
 
     interface OnItemClickListener {
