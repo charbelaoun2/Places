@@ -1,9 +1,12 @@
 package com.example.places
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
 import android.widget.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -14,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.places.databinding.LayoutFilterBinding
 import com.example.places.databinding.ListFragmentBinding
 import com.example.places.databinding.PlaceDetailsBinding
+import com.example.places.saved_item.SavedItemActivity
 import com.example.places.viewmodels.PlacesViewModel
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.ktx.analytics
@@ -29,6 +33,11 @@ class ListFragment : Fragment(R.layout.list_fragment), ListAdapter.OnItemClickLi
     private lateinit var listAdapter: ListAdapter
     private lateinit var firebaseAnalytics: FirebaseAnalytics
     private val viewModel by activityViewModels<PlacesViewModel>()
+    private val rotateOpen : Animation by lazy { AnimationUtils.loadAnimation(requireContext(),R.anim.rotate_open_anim)}
+    private val rotateClose : Animation by lazy { AnimationUtils.loadAnimation(requireContext(),R.anim.rotate_clode_anim)}
+    private val fromBottom : Animation by lazy { AnimationUtils.loadAnimation(requireContext(),R.anim.from_btn_anim)}
+    private val toBottom : Animation by lazy { AnimationUtils.loadAnimation(requireContext(),R.anim.to_btn_anim)}
+    private var clicked = false
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -48,8 +57,15 @@ class ListFragment : Fragment(R.layout.list_fragment), ListAdapter.OnItemClickLi
             setupAdapter(places)
             updateRecyclerView(places)
         }
+        binding?.openFilter?.setOnClickListener {
+            onAddBtnClicked()
+        }
         binding?.filterButton?.setOnClickListener {
             showFilterDialogFragment()
+        }
+        binding?.saveButton?.setOnClickListener {
+            val intent = Intent(requireContext(), SavedItemActivity::class.java)
+            startActivity(intent)
         }
         binding?.nameSearch?.setOnQueryTextListener(object : SearchView.OnQueryTextListener,
             androidx.appcompat.widget.SearchView.OnQueryTextListener {
@@ -130,6 +146,34 @@ class ListFragment : Fragment(R.layout.list_fragment), ListAdapter.OnItemClickLi
         childFragmentManager.beginTransaction()
             .add(fragment, FilterDialogFragment.TAG)
             .commit()
+    }
+
+    private fun onAddBtnClicked() {
+        setVisibility(clicked)
+        setAnimation(clicked)
+        clicked = !clicked
+    }
+
+    private fun setAnimation(clicked : Boolean) {
+       if(!clicked) {
+           binding?.filterButton?.startAnimation(fromBottom)
+           binding?.saveButton?.startAnimation(fromBottom)
+           binding?.openFilter?.startAnimation(rotateOpen)
+       } else {
+           binding?.filterButton?.startAnimation(toBottom)
+           binding?.saveButton?.startAnimation(toBottom)
+           binding?.openFilter?.startAnimation(rotateClose)
+       }
+    }
+
+    private fun setVisibility(clicked: Boolean) {
+        if(!clicked) {
+            binding?.filterButton?.visibility = View.VISIBLE
+            binding?.saveButton?.visibility = View.VISIBLE
+        } else {
+            binding?.filterButton?.visibility = View.INVISIBLE
+            binding?.saveButton?.visibility = View.INVISIBLE
+        }
     }
 
 }

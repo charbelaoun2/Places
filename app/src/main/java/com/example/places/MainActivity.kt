@@ -52,7 +52,6 @@ class MainActivity : AppCompatActivity() {
 
         viewModel.selectedPlace.observe(this) {
             loadFragment(MapFragment(), "map fragment")
-
         }
     }
 
@@ -62,5 +61,4 @@ class MainActivity : AppCompatActivity() {
             commit()
         }
     }
-
 }

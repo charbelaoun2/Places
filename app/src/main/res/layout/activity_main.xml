@@ -49,6 +49,7 @@
             android:textColor="@color/white"
             android:textStyle="normal"
             app:icon="@drawable/map_icon" />
+
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
