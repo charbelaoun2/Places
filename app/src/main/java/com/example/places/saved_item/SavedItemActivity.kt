@@ -35,6 +35,7 @@ class SavedItemActivity : AppCompatActivity() {
                 search(query)
                 return true
             }
+
             override fun onQueryTextChange(newText: String?): Boolean {
                 search(newText)
                 return true
@@ -49,7 +50,7 @@ class SavedItemActivity : AppCompatActivity() {
         updateRecyclerView(filterName)
     }
 
-    fun updateRecyclerView(list: List<Place>?) {
+    private fun updateRecyclerView(list: List<Place>?) {
         binding.placeSavedRecyclerView.apply {
             if (list != null) {
                 listAdapter.itemListSaved = list
