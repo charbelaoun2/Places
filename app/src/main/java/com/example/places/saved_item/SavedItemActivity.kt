@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.SearchView
 import androidx.activity.viewModels
-import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.places.Place
 import com.example.places.databinding.ActivitySavedItemBinding
@@ -24,10 +23,10 @@ class SavedItemActivity : AppCompatActivity() {
         binding.placeSavedRecyclerView.adapter = listAdapter
         binding.placeSavedRecyclerView.layoutManager = LinearLayoutManager(this)
 
-        viewModel.readAllSavedData.observe(this, Observer { place ->
+        viewModel.readAllSavedData.observe(this) { place ->
             println(place)
             listAdapter.setData(place)
-        })
+        }
 
         binding.nameSearch.setOnQueryTextListener(object : SearchView.OnQueryTextListener,
             androidx.appcompat.widget.SearchView.OnQueryTextListener {
