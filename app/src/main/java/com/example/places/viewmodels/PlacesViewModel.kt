@@ -12,7 +12,7 @@ import java.net.UnknownHostException
 class PlacesViewModel : ViewModel() {
     var placesLiveData = MutableLiveData<List<Place>>()
     var selectedPlace = MutableLiveData<Place>()
-    var exceptionCatched = MutableLiveData<Boolean>()
+    var exceptionCaught = MutableLiveData<Boolean>()
     val readAllSavedData : LiveData<MutableList<Place>> = Manager.readAllSavedData()
     val editedText = MutableLiveData<Place>()
 
@@ -54,7 +54,7 @@ class PlacesViewModel : ViewModel() {
                 }
 
             } catch (exception: UnknownHostException) {
-                exceptionCatched.value = true
+                exceptionCaught.value = true
             }
         }
 

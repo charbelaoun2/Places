@@ -1,5 +1,6 @@
 package com.example.places.saved_item
 
+import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.SearchView
@@ -27,6 +28,7 @@ class SavedItemActivity : AppCompatActivity() {
         binding.placeSavedRecyclerView.layoutManager = LinearLayoutManager(this)
 
         val swipeToSaveCallback = object : SwipeEdit(this) {
+            @SuppressLint("NotifyDataSetChanged")
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 val placeSwiped = listAdapter.itemListSaved[viewHolder.adapterPosition]
                 showEditDialogFragment(placeSwiped)
@@ -72,12 +74,13 @@ class SavedItemActivity : AppCompatActivity() {
         updateRecyclerView(filterName as MutableList<Place>?)
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     private fun updateRecyclerView(list: MutableList<Place>?) {
         binding.placeSavedRecyclerView.apply {
             if (list != null) {
                 listAdapter.itemListSaved = list
             }
-            listAdapter.notifyDataSetChanged()
+            this@SavedItemActivity.listAdapter.notifyDataSetChanged()
         }
     }
 
