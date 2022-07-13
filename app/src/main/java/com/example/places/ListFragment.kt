@@ -106,7 +106,7 @@ class ListFragment : Fragment(R.layout.list_fragment), ListAdapter.OnItemClickLi
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 viewHolder.adapterPosition
-                val placeSwiped = listAdapter.lists.get(viewHolder.adapterPosition)
+                val placeSwiped = listAdapter.lists[viewHolder.adapterPosition]
                 viewModel.insertDataToDatabase(placeSwiped)
                 listAdapter.notifyItemChanged(viewHolder.adapterPosition)
             }

@@ -13,10 +13,13 @@ class PlacesViewModel : ViewModel() {
     var placesLiveData = MutableLiveData<List<Place>>()
     var selectedPlace = MutableLiveData<Place>()
     var exceptionCatched = MutableLiveData<Boolean>()
-    val readAllSavedData : LiveData<List<Place>>
+    val readAllSavedData : LiveData<MutableList<Place>> = Manager.readAllSavedData()
+    val editedText = MutableLiveData<Place>()
 
-    init {
-        readAllSavedData = Manager.readAllSavedData()
+    fun updatePlaceDatabase(place: Place) {
+        viewModelScope.launch {
+            Manager.updatePlace(place)
+        }
     }
 
     fun insertDataToDatabase(place: Place) {
