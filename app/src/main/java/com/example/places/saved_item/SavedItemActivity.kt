@@ -27,6 +27,17 @@ class SavedItemActivity : AppCompatActivity() {
         binding.placeSavedRecyclerView.adapter = listAdapter
         binding.placeSavedRecyclerView.layoutManager = LinearLayoutManager(this)
 
+        val swipeToDeleteCallback = object  : SwipeDelete(this) {
+            @SuppressLint("NotifyDataSetChanged")
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                val placeSwiped = listAdapter.itemListSaved[viewHolder.adapterPosition]
+                viewModel.deletePlaceDatabase(placeSwiped)
+                listAdapter.notifyItemChanged(viewHolder.adapterPosition)
+            }
+        }
+        val itemTouchDelete = ItemTouchHelper(swipeToDeleteCallback)
+        itemTouchDelete.attachToRecyclerView(binding.placeSavedRecyclerView)
+
         val swipeToSaveCallback = object : SwipeEdit(this) {
             @SuppressLint("NotifyDataSetChanged")
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {

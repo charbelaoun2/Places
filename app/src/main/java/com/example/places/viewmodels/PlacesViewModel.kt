@@ -22,6 +22,12 @@ class PlacesViewModel : ViewModel() {
         }
     }
 
+    fun deletePlaceDatabase(place: Place) {
+        viewModelScope.launch {
+            Manager.deletePlace(place)
+        }
+    }
+
     fun insertDataToDatabase(place: Place) {
         viewModelScope.launch {
             Manager.insertPlace(place)

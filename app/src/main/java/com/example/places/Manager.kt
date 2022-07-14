@@ -28,4 +28,8 @@ object Manager {
     suspend fun updatePlace(place: Place) {
         db.placeDao().updatePlace(place)
     }
+
+    suspend fun deletePlace(place: Place) {
+        db.placeDao().deletePlace(place)
+    }
 }
