@@ -8,6 +8,7 @@ import com.example.places.*
 import kotlinx.coroutines.launch
 import java.lang.IndexOutOfBoundsException
 import java.net.UnknownHostException
+import kotlin.random.Random
 
 class PlacesViewModel : ViewModel() {
     var placesLiveData = MutableLiveData<List<Place>>()
@@ -42,7 +43,7 @@ class PlacesViewModel : ViewModel() {
                 val placesResponse = response.body()?.results
                 if (placesResponse != null) {
                     val listPlace = placesResponse.map {
-                        Place(
+                        Place(Random.nextInt(0,20),
                             it.fsq_id,
                             it.name,
                             it.location.address,
@@ -83,7 +84,7 @@ class PlacesViewModel : ViewModel() {
                     val responsePhoto = RetrofitInstance.api_photo.getPhoto(it.fsq_id)
                     val photo = listPhoto.find { e -> e == responsePhoto.body() }
 
-                    Place(
+                    Place(Random.nextInt(0,20),
                         it.fsq_id,
                         it.name,
                         it.location.address,

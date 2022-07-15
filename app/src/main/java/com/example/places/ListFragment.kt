@@ -30,17 +30,31 @@ class ListFragment : Fragment(R.layout.list_fragment), ListAdapter.OnItemClickLi
     private lateinit var binding2: PlaceDetailsBinding
     private lateinit var listAdapter: ListAdapter
     private lateinit var firebaseAnalytics: FirebaseAnalytics
+    private lateinit var placeSwiped: Place
+    var check : Boolean = false
     private val viewModel by activityViewModels<PlacesViewModel>()
-    private val rotateOpen : Animation by lazy { AnimationUtils.loadAnimation(requireContext(),R.anim.rotate_open_anim)}
-    private val rotateClose : Animation by lazy { AnimationUtils.loadAnimation(requireContext(),R.anim.rotate_clode_anim)}
-    private val fromBottom : Animation by lazy { AnimationUtils.loadAnimation(requireContext(),R.anim.from_btn_anim)}
-    private val toBottom : Animation by lazy { AnimationUtils.loadAnimation(requireContext(),R.anim.to_btn_anim)}
+    private val rotateOpen: Animation by lazy {
+        AnimationUtils.loadAnimation(requireContext(),
+            R.anim.rotate_open_anim)
+    }
+    private val rotateClose: Animation by lazy {
+        AnimationUtils.loadAnimation(requireContext(),
+            R.anim.rotate_clode_anim)
+    }
+    private val fromBottom: Animation by lazy {
+        AnimationUtils.loadAnimation(requireContext(),
+            R.anim.from_btn_anim)
+    }
+    private val toBottom: Animation by lazy {
+        AnimationUtils.loadAnimation(requireContext(),
+            R.anim.to_btn_anim)
+    }
     private var clicked = false
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
         binding = ListFragmentBinding.inflate(inflater, container, false)
         binding2 = PlaceDetailsBinding.inflate(inflater, container, false)
@@ -55,6 +69,7 @@ class ListFragment : Fragment(R.layout.list_fragment), ListAdapter.OnItemClickLi
             setupAdapter(places)
             updateRecyclerView(places)
         }
+
         binding?.openFilter?.setOnClickListener {
             onAddBtnClicked()
         }
@@ -105,8 +120,15 @@ class ListFragment : Fragment(R.layout.list_fragment), ListAdapter.OnItemClickLi
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 viewHolder.adapterPosition
-                val placeSwiped = listAdapter.lists[viewHolder.adapterPosition]
-                viewModel.insertDataToDatabase(placeSwiped)
+                placeSwiped = listAdapter.lists[viewHolder.adapterPosition]
+                viewModel.readAllSavedData.observe(viewLifecycleOwner) { places ->
+                    if (places.isEmpty()) {
+                        viewModel.insertDataToDatabase(placeSwiped)
+                    }
+                    if (places.none {it.name == placeSwiped.name || it.address == placeSwiped.address}) {
+                        viewModel.insertDataToDatabase(placeSwiped)
+                    }
+                }
                 listAdapter.notifyItemChanged(viewHolder.adapterPosition)
             }
         }
@@ -151,20 +173,20 @@ class ListFragment : Fragment(R.layout.list_fragment), ListAdapter.OnItemClickLi
         clicked = !clicked
     }
 
-    private fun setAnimation(clicked : Boolean) {
-       if(!clicked) {
-           binding?.filterButton?.startAnimation(fromBottom)
-           binding?.saveButton?.startAnimation(fromBottom)
-           binding?.openFilter?.startAnimation(rotateOpen)
-       } else {
-           binding?.filterButton?.startAnimation(toBottom)
-           binding?.saveButton?.startAnimation(toBottom)
-           binding?.openFilter?.startAnimation(rotateClose)
-       }
+    private fun setAnimation(clicked: Boolean) {
+        if (!clicked) {
+            binding?.filterButton?.startAnimation(fromBottom)
+            binding?.saveButton?.startAnimation(fromBottom)
+            binding?.openFilter?.startAnimation(rotateOpen)
+        } else {
+            binding?.filterButton?.startAnimation(toBottom)
+            binding?.saveButton?.startAnimation(toBottom)
+            binding?.openFilter?.startAnimation(rotateClose)
+        }
     }
 
     private fun setVisibility(clicked: Boolean) {
-        if(!clicked) {
+        if (!clicked) {
             binding?.filterButton?.visibility = View.VISIBLE
             binding?.saveButton?.visibility = View.VISIBLE
         } else {
@@ -172,5 +194,4 @@ class ListFragment : Fragment(R.layout.list_fragment), ListAdapter.OnItemClickLi
             binding?.saveButton?.visibility = View.INVISIBLE
         }
     }
-
 }

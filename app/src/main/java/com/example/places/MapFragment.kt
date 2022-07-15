@@ -33,11 +33,13 @@ class MapFragment : Fragment(R.layout.map_fragment), OnMapReadyCallback {
         binding?.mapView?.onCreate(savedInstanceState)
         binding?.mapView?.onResume()
         binding?.mapView?.getMapAsync(this)
+
         viewModel.selectedPlace.observe(viewLifecycleOwner) { selectedPlace ->
             if (selectedPlace != null) {
                 showPlaceDetailsBottomSheet(selectedPlace)
             }
         }
+
     }
 
     override fun onMapReady(p0: GoogleMap) {
@@ -49,6 +51,11 @@ class MapFragment : Fragment(R.layout.map_fragment), OnMapReadyCallback {
             viewModel.selectedPlace.observe(this) { place ->
                 val location = LatLng(place.latitude.toDouble(),place.longitude.toDouble())
                 zoomPlace(location)
+            }
+            viewModel.selectedPlace.observe(viewLifecycleOwner) { selectedPlace ->
+                if (selectedPlace != null) {
+                    showPlaceDetailsBottomSheet(selectedPlace)
+                }
             }
         }
     }

@@ -59,7 +59,6 @@ class SavedItemActivity : AppCompatActivity() {
         itemTouchHelper.attachToRecyclerView(binding.placeSavedRecyclerView)
 
         viewModel.readAllSavedData.observe(this) { place ->
-            println(place)
             listAdapter.setData(place)
         }
 
