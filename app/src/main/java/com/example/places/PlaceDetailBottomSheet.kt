@@ -1,15 +1,13 @@
 package com.example.places
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import com.bumptech.glide.Glide
 import com.example.places.databinding.PlaceDetailsBinding
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 class PlaceDetailBottomSheet : BottomSheetDialogFragment() {
-    private lateinit var binding : PlaceDetailsBinding
+    private lateinit var binding: PlaceDetailsBinding
 
     companion object {
         val TAG: String = PlaceDetailBottomSheet::class.java.simpleName ?: ""
@@ -19,19 +17,34 @@ class PlaceDetailBottomSheet : BottomSheetDialogFragment() {
         fun newInstance(place: Place): PlaceDetailBottomSheet {
             val fragment = PlaceDetailBottomSheet()
             val args = Bundle()
-            fragment.arguments=args
+            fragment.arguments = args
             args.putParcelable(PLACE_ARGUMENT, place)
             return fragment
         }
     }
 
+    override fun onStart() {
+        super.onStart()
+
+        dialog?.window?.apply {
+            setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+            setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL, WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL)
+
+            attributes = attributes.apply {
+                gravity = Gravity.BOTTOM
+            }
+            setDimAmount(0.001f)
+        }
+    }
+
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         super.onCreateView(inflater, container, savedInstanceState)
-        binding = PlaceDetailsBinding.inflate(inflater,container,false)
+        binding = PlaceDetailsBinding.inflate(inflater, container, false)
         return binding.root
 
     }
