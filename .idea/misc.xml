@@ -21,7 +21,7 @@
         <entry key="..\:/Users/pc/Desktop/2eme-Usj/Stage/Places/app/src/main/res/layout/fragment_list.xml" value="0.25" />
         <entry key="..\:/Users/pc/Desktop/2eme-Usj/Stage/Places/app/src/main/res/layout/fragment_saved.xml" value="0.25" />
         <entry key="..\:/Users/pc/Desktop/2eme-Usj/Stage/Places/app/src/main/res/layout/layout_filter.xml" value="0.264" />
-        <entry key="..\:/Users/pc/Desktop/2eme-Usj/Stage/Places/app/src/main/res/layout/list_fragment.xml" value="0.1" />
+        <entry key="..\:/Users/pc/Desktop/2eme-Usj/Stage/Places/app/src/main/res/layout/list_fragment.xml" value="0.2" />
         <entry key="..\:/Users/pc/Desktop/2eme-Usj/Stage/Places/app/src/main/res/layout/list_item.xml" value="0.25" />
         <entry key="..\:/Users/pc/Desktop/2eme-Usj/Stage/Places/app/src/main/res/layout/map.xml" value="0.25" />
         <entry key="..\:/Users/pc/Desktop/2eme-Usj/Stage/Places/app/src/main/res/layout/map_fragment.xml" value="0.25" />
@@ -29,6 +29,7 @@
         <entry key="..\:/Users/pc/Desktop/2eme-Usj/Stage/Places/app/src/main/res/layout/place_details_bottom_sheet.xml" value="0.25" />
         <entry key="..\:/Users/pc/Desktop/2eme-Usj/Stage/Places/app/src/main/res/layout/round.xml" value="0.20052083333333334" />
         <entry key="..\:/Users/pc/Desktop/2eme-Usj/Stage/Places/app/src/main/res/menu/bottom_nav_menu.xml" value="0.24895833333333334" />
+        <entry key="..\:/Users/pc/Desktop/2eme-Usj/Stage/Places/app/src/main/res/menu/bottom_nav_saved_places.xml" value="0.25" />
         <entry key="..\:/Users/pc/Desktop/2eme-Usj/Stage/Places/app/src/main/res/menu/menu_item.xml" value="0.25" />
         <entry key="..\:/Users/pc/Desktop/2eme-Usj/Stage/Places/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.1185" />
       </map>

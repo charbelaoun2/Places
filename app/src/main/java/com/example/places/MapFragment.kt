@@ -77,8 +77,17 @@ class MapFragment : Fragment(R.layout.map_fragment), OnMapReadyCallback {
     override fun onMapReady(p0: GoogleMap) {
         p0.let {
             googleMap = it
-            viewModel.placesLiveData.observe(this) { places ->
-                markerPlaces(places)
+
+            binding?.ListPlacesButton?.setOnClickListener {
+                viewModel.placesLiveData.observe(this) {places->
+                    markerPlaces(places)
+                }
+            }
+
+            binding?.listSavedButton?.setOnClickListener {
+                viewModel.readAllSavedData.observe(this) {places->
+                    markerPlaces(places)
+                }
             }
             viewModel.selectedPlace.observe(this) { place ->
                 val location = LatLng(place.latitude.toDouble(),place.longitude.toDouble())
@@ -109,7 +118,7 @@ class MapFragment : Fragment(R.layout.map_fragment), OnMapReadyCallback {
 
 
     private fun zoomPlace(location : LatLng) {
-        googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(location, 50f))
+        googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(location, 20f))
     }
 
     private fun showPlaceDetailsBottomSheet(place: Place) {
