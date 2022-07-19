@@ -7,23 +7,13 @@
     android:background="@color/white"
     tools:context=".saved_item.SavedItemActivity">
 
-    <androidx.appcompat.widget.SearchView
-        android:id="@+id/name_search"
+    <FrameLayout
+        android:id="@+id/frame_layout_saved"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
-        app:iconifiedByDefault="false"
-        app:queryHint="Search Place Name" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/place_saved_recycler_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="50dp"
-        app:layout_constraintTop_toTopOf="@id/name_search"
-        tools:layout_editor_absoluteX="73dp"
-        tools:listitem="@layout/place_details">
-
-    </androidx.recyclerview.widget.RecyclerView>
+        android:layout_height="0dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+    </FrameLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,9 +1,12 @@
 package com.example.places
 
+import android.location.Address
+import android.location.Geocoder
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.example.places.databinding.MapFragmentBinding
@@ -13,6 +16,8 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
+import java.io.IOException
+
 
 class MapFragment : Fragment(R.layout.map_fragment), OnMapReadyCallback {
     private var binding: MapFragmentBinding? = null
@@ -22,7 +27,7 @@ class MapFragment : Fragment(R.layout.map_fragment), OnMapReadyCallback {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
         binding = MapFragmentBinding.inflate(inflater, container, false)
         return binding?.root
@@ -39,6 +44,34 @@ class MapFragment : Fragment(R.layout.map_fragment), OnMapReadyCallback {
                 showPlaceDetailsBottomSheet(selectedPlace)
             }
         }
+
+        binding?.mapSearch?.setOnQueryTextListener(object : SearchView.OnQueryTextListener,
+            androidx.appcompat.widget.SearchView.OnQueryTextListener{
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                val location: String = binding!!.mapSearch.query.toString()
+                var addressList: List<Address>? = null
+                if (location != null || location == "") {
+
+                    val geocoder = Geocoder(requireContext())
+                    try {
+                        addressList = geocoder.getFromLocationName(location, 1)
+                    } catch (e: IOException) {
+                        e.printStackTrace()
+                    } catch (e : NullPointerException) {}
+                    val address: Address = addressList!![0]
+                    val latLng = LatLng(address.latitude, address.longitude)
+                    googleMap.addMarker(MarkerOptions().position(latLng).title(location))
+                    googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 10f))
+                }
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                return false
+            }
+
+        })
+        binding?.mapView?.getMapAsync(this)
     }
 
     override fun onMapReady(p0: GoogleMap) {
