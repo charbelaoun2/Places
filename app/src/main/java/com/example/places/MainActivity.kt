@@ -10,7 +10,6 @@ import com.example.places.databinding.ActivityMainBinding
 import com.example.places.viewmodels.PlacesViewModel
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.ktx.analytics
-import com.google.firebase.analytics.ktx.logEvent
 import com.google.firebase.ktx.Firebase
 
 class MainActivity : AppCompatActivity() {
@@ -40,18 +39,12 @@ class MainActivity : AppCompatActivity() {
         viewModel.getPlaces(null,null,null,null,null,null)
         loadFragment(ListFragment(), "list fragment")
 
-        binding.listButton.setOnClickListener {
-            firebaseAnalytics.logEvent(Analytics.LIST_BUTTON_CLICK) {}
-            loadFragment(ListFragment(), "list fragment")
-        }
-
-        binding.mapButton.setOnClickListener {
-            firebaseAnalytics.logEvent(Analytics.MAP_BUTTON_CLICK) {}
-            loadFragment(MapFragment(), "map fragment")
-        }
-
-        viewModel.selectedPlace.observe(this) {
-            loadFragment(MapFragment(), "map fragment")
+        binding.bottomNavigationView.setOnItemSelectedListener  {
+            when (it.itemId) {
+                R.id.List_button -> loadFragment(ListFragment(), "List Fragment")
+                R.id.map_button -> loadFragment(MapFragment(), "Map Fragment")
+            }
+            true
         }
     }
 
