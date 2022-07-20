@@ -1,5 +1,6 @@
 package com.example.places.viewmodels
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -12,6 +13,17 @@ class PlacesViewModel : ViewModel() {
     var placesLiveData = MutableLiveData<List<Place>>()
     var selectedPlace = MutableLiveData<Place>()
     var exceptionCatched = MutableLiveData<Boolean>()
+    val readAllSavedData : LiveData<List<Place>>
+
+    init {
+        readAllSavedData = Manager.readAllSavedData()
+    }
+
+    fun insertDataToDatabase(place: Place) {
+        viewModelScope.launch {
+            Manager.insertPlace(place)
+        }
+    }
 
     fun getPlaces(minParam : Int?,maxPriceParam : Int?,limitParam : Int?,openAtParam : String?,openNow : Boolean?,sort : String?) {
         viewModelScope.launch {
@@ -78,7 +90,6 @@ class PlacesViewModel : ViewModel() {
                 placesLiveData.value = listPlace
 
             } catch (exception : IndexOutOfBoundsException) {
-                print("test")
             }
         }
     }
