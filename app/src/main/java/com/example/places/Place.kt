@@ -8,8 +8,9 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 @Entity(tableName = "Place_Table")
 data class Place(
-    @PrimaryKey
-    val fsq_id: String,
+    @PrimaryKey(autoGenerate = true)
+    var id : Int,
+    var fsq_id: String,
     var name: String?,
     var address: String?,
     val email: String?,

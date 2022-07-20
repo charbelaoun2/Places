@@ -33,6 +33,7 @@ class MapFragment : Fragment(R.layout.map_fragment), OnMapReadyCallback {
         binding?.mapView?.onCreate(savedInstanceState)
         binding?.mapView?.onResume()
         binding?.mapView?.getMapAsync(this)
+
         viewModel.selectedPlace.observe(viewLifecycleOwner) { selectedPlace ->
             if (selectedPlace != null) {
                 showPlaceDetailsBottomSheet(selectedPlace)
@@ -89,6 +90,4 @@ class MapFragment : Fragment(R.layout.map_fragment), OnMapReadyCallback {
             .add(fragment, PlaceDetailBottomSheet.TAG)
             .commit()
     }
-
-
 }

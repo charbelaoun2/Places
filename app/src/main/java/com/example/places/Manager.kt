@@ -14,7 +14,8 @@ object Manager {
             context.applicationContext,
             PlaceDatabase::class.java,
             "place_database"
-        ).build()
+        ).fallbackToDestructiveMigration()
+            .build()
     }
 
     suspend fun insertPlace(place: Place) {
@@ -28,4 +29,9 @@ object Manager {
     suspend fun updatePlace(place: Place) {
         db.placeDao().updatePlace(place)
     }
+
+    suspend fun deletePlace(place: Place) {
+        db.placeDao().deletePlace(place)
+    }
+
 }
