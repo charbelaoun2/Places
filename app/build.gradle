@@ -21,6 +21,13 @@ android {
 
     }
 
+    configurations {
+        all {
+            // resolves conflicts of openCSV with platform common-logging
+            exclude module: 'commons-logging'
+        }
+    }
+
     buildFeatures {
         viewBinding true
     }
@@ -118,5 +125,8 @@ dependencies {
     // Navigation Component
     implementation 'androidx.navigation:navigation-fragment-ktx:2.2.2'
     implementation 'androidx.navigation:navigation-ui-ktx:2.2.2'
+
+    // OpenCsv
+    implementation "com.opencsv:opencsv:5.3"
     
 }

@@ -31,7 +31,6 @@ class ListFragment : Fragment(R.layout.list_fragment), ListAdapter.OnItemClickLi
     private lateinit var listAdapter: ListAdapter
     private lateinit var firebaseAnalytics: FirebaseAnalytics
     private lateinit var placeSwiped: Place
-    var check : Boolean = false
     private val viewModel by activityViewModels<PlacesViewModel>()
     private val rotateOpen: Animation by lazy {
         AnimationUtils.loadAnimation(requireContext(),

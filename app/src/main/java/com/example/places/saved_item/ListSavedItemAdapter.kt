@@ -3,12 +3,14 @@ package com.example.places.saved_item
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.places.ListAdapter
 import com.example.places.Place
 import com.example.places.R
 
 class ListSavedItemAdapter: RecyclerView.Adapter<ListSavedViewHolder>() {
 
     var itemListSaved = mutableListOf<Place>()
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListSavedViewHolder {
         return ListSavedViewHolder(
             LayoutInflater.from(parent.context).inflate(

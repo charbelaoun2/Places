@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.fragment.app.Fragment
 import com.example.places.databinding.ActivityMainBinding
+import com.example.places.saved_item.ListSavedFragment
 import com.example.places.viewmodels.PlacesViewModel
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.ktx.analytics
@@ -45,6 +46,10 @@ class MainActivity : AppCompatActivity() {
                 R.id.map_button -> loadFragment(MapFragment(), "Map Fragment")
             }
             true
+        }
+
+        viewModel.selectedPlace.observe(this) {
+            loadFragment(MapFragment(), "map fragment")
         }
     }
 
