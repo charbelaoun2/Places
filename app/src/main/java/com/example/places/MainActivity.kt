@@ -23,10 +23,10 @@ class MainActivity : AppCompatActivity() {
         firebaseAnalytics = Firebase.analytics
         installSplashScreen().apply {
             setKeepVisibleCondition{
-               viewModel.exceptionCatched.value==false
+               viewModel.exceptionCaught.value==false
             }
         }
-        viewModel.exceptionCatched.observe(this) {
+        viewModel.exceptionCaught.observe(this) {
             val builder = AlertDialog.Builder(this)
             builder.setTitle("Check your internet connection !")
             builder.setMessage("Enable to fetch Api data due to internet connection Problems ")

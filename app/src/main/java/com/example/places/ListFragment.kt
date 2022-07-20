@@ -1,5 +1,6 @@
 package com.example.places
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,7 +11,6 @@ import android.view.animation.AnimationUtils
 import android.widget.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -23,8 +23,6 @@ import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.ktx.analytics
 import com.google.firebase.analytics.ktx.logEvent
 import com.google.firebase.ktx.Firebase
-import kotlinx.coroutines.launch
-
 
 class ListFragment : Fragment(R.layout.list_fragment), ListAdapter.OnItemClickListener {
     private var binding: ListFragmentBinding? = null
@@ -88,6 +86,7 @@ class ListFragment : Fragment(R.layout.list_fragment), ListAdapter.OnItemClickLi
         updateRecyclerView(filterName)
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     private fun updateRecyclerView(list: List<Place>?) {
         binding?.placesRecyclerView.apply {
             if (list != null) {
@@ -106,7 +105,7 @@ class ListFragment : Fragment(R.layout.list_fragment), ListAdapter.OnItemClickLi
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 viewHolder.adapterPosition
-                val placeSwiped = listAdapter.lists.get(viewHolder.adapterPosition)
+                val placeSwiped = listAdapter.lists[viewHolder.adapterPosition]
                 viewModel.insertDataToDatabase(placeSwiped)
                 listAdapter.notifyItemChanged(viewHolder.adapterPosition)
             }
@@ -127,11 +126,9 @@ class ListFragment : Fragment(R.layout.list_fragment), ListAdapter.OnItemClickLi
     }
 
     override fun onItemClick(place: Place) {
-        if (place.fsq_id != null) {
-            firebaseAnalytics.logEvent(Analytics.PLACE_LIST_CLICK) {
-                param(FirebaseAnalytics.Param.ITEM_ID, place.fsq_id)
-                param(FirebaseAnalytics.Param.ITEM_NAME, place.name ?: "null")
-            }
+        firebaseAnalytics.logEvent(Analytics.PLACE_LIST_CLICK) {
+            param(FirebaseAnalytics.Param.ITEM_ID, place.fsq_id)
+            param(FirebaseAnalytics.Param.ITEM_NAME, place.name ?: "null")
         }
         viewModel.selectedPlace.value = place
     }
