@@ -92,6 +92,14 @@ class MapFragment : Fragment(R.layout.map_fragment), OnMapReadyCallback {
             viewModel.selectedPlace.observe(this) { place ->
                 val location = LatLng(place.latitude.toDouble(),place.longitude.toDouble())
                 zoomPlace(location)
+                val marker = googleMap.addMarker(MarkerOptions().position(location))
+                marker?.tag = place.fsq_id
+                googleMap.setOnMarkerClickListener { marker ->
+                    if (place != null) {
+                        showPlaceDetailsBottomSheet(place)
+                    }
+                    return@setOnMarkerClickListener false
+                }
             }
         }
     }
