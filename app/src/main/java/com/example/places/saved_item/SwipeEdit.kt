@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.places.R
 
 abstract class SwipeEdit(context: Context) : ItemTouchHelper.Callback() {
-    private var editIcon = ContextCompat.getDrawable(context, R.drawable.ic_baseline_save_24)!!
+    private var editIcon = ContextCompat.getDrawable(context, R.drawable.ic_baseline_edit_24)!!
     private var swipeBackground: ColorDrawable = ColorDrawable(Color.parseColor("#0371C9"))
 
     override fun getMovementFlags(
