@@ -11,6 +11,7 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.places.Manager
 import com.example.places.Place
 import com.example.places.R
 import com.example.places.databinding.FragmentSavedBinding
@@ -71,6 +72,10 @@ class ListSavedFragment : Fragment(R.layout.fragment_saved) {
 
         viewModel.readAllSavedData.observe(viewLifecycleOwner) { place ->
             listAdapter.setData(place)
+        }
+
+        binding.exportToCsv.setOnClickListener {
+           Manager.exportCSV()
         }
 
         binding.nameSearch.setOnQueryTextListener(object : SearchView.OnQueryTextListener,
