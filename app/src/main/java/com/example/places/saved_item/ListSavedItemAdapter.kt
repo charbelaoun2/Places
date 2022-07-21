@@ -1,9 +1,9 @@
 package com.example.places.saved_item
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.places.ListAdapter
 import com.example.places.Place
 import com.example.places.R
 
@@ -26,6 +26,7 @@ class ListSavedItemAdapter: RecyclerView.Adapter<ListSavedViewHolder>() {
 
     override fun getItemCount(): Int = itemListSaved.size
 
+    @SuppressLint("NotifyDataSetChanged")
     fun setData(place: MutableList<Place>) {
         itemListSaved = place
         notifyDataSetChanged()
