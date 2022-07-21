@@ -2,7 +2,6 @@ package com.example.places
 
 import android.content.Context
 import android.os.Environment
-import androidx.core.app.ActivityCompat
 import androidx.lifecycle.LiveData
 import androidx.room.Room
 import com.opencsv.CSVWriter
@@ -12,10 +11,7 @@ import java.io.FileWriter
 
 object Manager {
 
-    private const val fileName = "places"
     private const val TABLE_NAME = "Place_Table"
-
-
     private lateinit var db: PlaceDatabase
     private lateinit var readAllData: LiveData<MutableList<Place>>
 
@@ -46,7 +42,7 @@ object Manager {
     }
 
     fun exportCSV() {
-        val exportDir = File(Environment.getExternalStorageDirectory(),"files/test")
+        val exportDir = File(Environment.getExternalStorageDirectory(), "files/test")
         if (!exportDir.exists()) {
             exportDir.mkdirs()
         }
