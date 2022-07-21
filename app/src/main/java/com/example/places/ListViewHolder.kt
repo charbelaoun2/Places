@@ -31,7 +31,6 @@ class ListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         } else {
             tvDescription.visibility = View.GONE
         }
-
         if (place.tel != null) {
             tvDescription.visibility = View.VISIBLE
             tvTel.text = place.tel

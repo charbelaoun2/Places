@@ -32,7 +32,6 @@ class MainActivity : AppCompatActivity() {
             builder.setIcon(R.drawable.ic_baseline_wifi_off_24)
             builder.setPositiveButton("Cancel") { dialog, _ -> dialog.dismiss() }
             builder.show()
-
         }
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -46,12 +45,10 @@ class MainActivity : AppCompatActivity() {
             }
             true
         }
-
         viewModel.selectedPlace.observe(this) {
             loadFragment(MapFragment(), "map fragment")
         }
     }
-
     private fun loadFragment(fragment: Fragment, tag: String) {
         supportFragmentManager.beginTransaction().apply {
             replace(R.id.frame_layout, fragment, tag)

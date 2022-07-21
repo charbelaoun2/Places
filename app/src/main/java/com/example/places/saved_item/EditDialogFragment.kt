@@ -74,7 +74,6 @@ class EditDialogFragment : DialogFragment() {
                 viewModel.editedText.value = place
             }
             dismiss()
-
         }
     }
 }

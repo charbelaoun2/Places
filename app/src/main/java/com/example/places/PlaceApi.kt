@@ -21,7 +21,6 @@ interface PlaceApi {
     ): Response<PlaceResponse>
 }
 
-
 interface PhotoApi {
     @Headers("Authorization:${BuildConfig.FOUR_SQUARE_API}")
     @GET("v3/places/{fsq_id}/photos")

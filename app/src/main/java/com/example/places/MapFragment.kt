@@ -57,7 +57,9 @@ class MapFragment : Fragment(R.layout.map_fragment), OnMapReadyCallback {
                         addressList = geocoder.getFromLocationName(location, 1)
                     } catch (e: IOException) {
                         e.printStackTrace()
-                    } catch (e : NullPointerException) {}
+                    } catch (e : NullPointerException) {
+                        e.printStackTrace()
+                    }
                     val address: Address = addressList!![0]
                     val latLng = LatLng(address.latitude, address.longitude)
                     googleMap.addMarker(MarkerOptions().position(latLng).title(location))
@@ -83,7 +85,6 @@ class MapFragment : Fragment(R.layout.map_fragment), OnMapReadyCallback {
                     markerPlaces(places)
                 }
             }
-
             binding?.listSavedButton?.setOnClickListener {
                 viewModel.readAllSavedData.observe(this) {places->
                     markerPlaces(places)
@@ -134,7 +135,6 @@ class MapFragment : Fragment(R.layout.map_fragment), OnMapReadyCallback {
         if (oldFragment != null) {
             childFragmentManager.beginTransaction().remove(oldFragment).commit()
         }
-
         val fragment = PlaceDetailBottomSheet.newInstance(place)
         childFragmentManager.beginTransaction()
             .add(fragment, PlaceDetailBottomSheet.TAG)

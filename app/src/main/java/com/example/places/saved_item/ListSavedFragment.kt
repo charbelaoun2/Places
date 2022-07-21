@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.SearchView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -44,12 +45,17 @@ class ListSavedFragment : Fragment(R.layout.fragment_saved) {
                 val placeSwiped = listAdapter.itemListSaved[viewHolder.adapterPosition]
                 viewModel.deletePlaceDatabase(placeSwiped)
                 listAdapter.notifyItemChanged(viewHolder.adapterPosition)
+                Toast.makeText(
+                    context,
+                    "Place Deleted from Database",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         }
         val itemTouchDelete = ItemTouchHelper(swipeToDeleteCallback)
         itemTouchDelete.attachToRecyclerView(binding.placeSavedRecyclerView)
 
-        val swipeToSaveCallback = object : SwipeEdit(requireContext()) {
+        val swipeToEditCallback = object : SwipeEdit(requireContext()) {
             @SuppressLint("NotifyDataSetChanged")
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 val placeSwiped = listAdapter.itemListSaved[viewHolder.adapterPosition]
@@ -60,6 +66,7 @@ class ListSavedFragment : Fragment(R.layout.fragment_saved) {
                         listAdapter.notifyItemChanged(viewHolder.adapterPosition)
                         viewModel.updatePlaceDatabase(it)
                     } catch (exception: ArrayIndexOutOfBoundsException) {
+                        exception.printStackTrace()
                     }
 
                 }
@@ -67,7 +74,7 @@ class ListSavedFragment : Fragment(R.layout.fragment_saved) {
             }
         }
 
-        val itemTouchHelper = ItemTouchHelper(swipeToSaveCallback)
+        val itemTouchHelper = ItemTouchHelper(swipeToEditCallback)
         itemTouchHelper.attachToRecyclerView(binding.placeSavedRecyclerView)
 
         viewModel.readAllSavedData.observe(viewLifecycleOwner) { place ->
@@ -76,6 +83,11 @@ class ListSavedFragment : Fragment(R.layout.fragment_saved) {
 
         binding.exportToCsv.setOnClickListener {
            Manager.exportCSV()
+            Toast.makeText(
+                context,
+                "Data exported to CSV",
+                Toast.LENGTH_SHORT
+            ).show()
         }
 
         binding.nameSearch.setOnQueryTextListener(object : SearchView.OnQueryTextListener,

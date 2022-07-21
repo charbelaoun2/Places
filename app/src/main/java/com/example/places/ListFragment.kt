@@ -132,10 +132,8 @@ class ListFragment : Fragment(R.layout.list_fragment), ListAdapter.OnItemClickLi
             }
         }
 
-
         val itemTouchHelper = ItemTouchHelper(swipeToSaveCallback)
         itemTouchHelper.attachToRecyclerView(binding?.placesRecyclerView)
-
         binding?.placesRecyclerView?.adapter = listAdapter
         binding?.placesRecyclerView?.layoutManager = LinearLayoutManager(context)
         binding?.nameSearch?.isSubmitButtonEnabled = true
