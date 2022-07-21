@@ -129,6 +129,11 @@ class ListFragment : Fragment(R.layout.list_fragment), ListAdapter.OnItemClickLi
                     }
                 }
                 listAdapter.notifyItemChanged(viewHolder.adapterPosition)
+                Toast.makeText(
+                    context,
+                    "This Place has been saved to the Database",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         }
 
