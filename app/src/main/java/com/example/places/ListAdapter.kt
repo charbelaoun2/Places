@@ -11,7 +11,6 @@ class ListAdapter(
     interface OnItemClickListener {
         fun onItemClick(place :Place)
     }
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListViewHolder {
         return ListViewHolder(
             LayoutInflater.from(parent.context).inflate(
@@ -19,7 +18,6 @@ class ListAdapter(
             )
         )
     }
-
     override fun onBindViewHolder(holder: ListViewHolder, position: Int) {
         val currentCity = lists[position]
         holder.setItem(currentCity)

@@ -126,16 +126,19 @@ class ListFragment : Fragment(R.layout.list_fragment), ListAdapter.OnItemClickLi
                     }
                     if (places.none {it.name == placeSwiped.name || it.address == placeSwiped.address}) {
                         viewModel.insertDataToDatabase(placeSwiped)
+                        Toast.makeText(
+                            context,
+                            "This Place has been saved to the Database",
+                            Toast.LENGTH_SHORT
+                        ).show()
                     }
                 }
                 listAdapter.notifyItemChanged(viewHolder.adapterPosition)
             }
         }
 
-
         val itemTouchHelper = ItemTouchHelper(swipeToSaveCallback)
         itemTouchHelper.attachToRecyclerView(binding?.placesRecyclerView)
-
         binding?.placesRecyclerView?.adapter = listAdapter
         binding?.placesRecyclerView?.layoutManager = LinearLayoutManager(context)
         binding?.nameSearch?.isSubmitButtonEnabled = true

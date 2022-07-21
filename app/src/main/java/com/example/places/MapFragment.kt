@@ -57,7 +57,9 @@ class MapFragment : Fragment(R.layout.map_fragment), OnMapReadyCallback {
                         addressList = geocoder.getFromLocationName(location, 1)
                     } catch (e: IOException) {
                         e.printStackTrace()
-                    } catch (e : NullPointerException) {}
+                    } catch (e : NullPointerException) {
+                        e.printStackTrace()
+                    }
                     val address: Address = addressList!![0]
                     val latLng = LatLng(address.latitude, address.longitude)
                     googleMap.addMarker(MarkerOptions().position(latLng).title(location))
@@ -83,7 +85,6 @@ class MapFragment : Fragment(R.layout.map_fragment), OnMapReadyCallback {
                     markerPlaces(places)
                 }
             }
-
             binding?.listSavedButton?.setOnClickListener {
                 viewModel.readAllSavedData.observe(this) {places->
                     markerPlaces(places)
@@ -92,6 +93,14 @@ class MapFragment : Fragment(R.layout.map_fragment), OnMapReadyCallback {
             viewModel.selectedPlace.observe(this) { place ->
                 val location = LatLng(place.latitude.toDouble(),place.longitude.toDouble())
                 zoomPlace(location)
+                val marker = googleMap.addMarker(MarkerOptions().position(location))
+                marker?.tag = place.fsq_id
+                googleMap.setOnMarkerClickListener {
+                    if (place != null) {
+                        showPlaceDetailsBottomSheet(place)
+                    }
+                    return@setOnMarkerClickListener false
+                }
             }
         }
     }
@@ -126,7 +135,6 @@ class MapFragment : Fragment(R.layout.map_fragment), OnMapReadyCallback {
         if (oldFragment != null) {
             childFragmentManager.beginTransaction().remove(oldFragment).commit()
         }
-
         val fragment = PlaceDetailBottomSheet.newInstance(place)
         childFragmentManager.beginTransaction()
             .add(fragment, PlaceDetailBottomSheet.TAG)

@@ -22,20 +22,15 @@ class SavedItemActivity : AppCompatActivity(){
         setContentView(binding.root)
         loadFragment(ListSavedFragment(), "list saved fragment")
 
-
         viewModel.selectedPlace.observe(this) {
             val intent = Intent(this, MapFragment::class.java)
             startActivity(intent)
         }
-
     }
-
-
     private fun loadFragment(fragment: Fragment, tag: String) {
         supportFragmentManager.beginTransaction().apply {
             replace(R.id.frame_layout_saved, fragment, tag)
             commit()
         }
     }
-
 }

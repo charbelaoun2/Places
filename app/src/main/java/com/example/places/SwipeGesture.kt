@@ -90,7 +90,5 @@ abstract class SwipeGesture(context: Context) : ItemTouchHelper.Callback() {
             actionState,
             isCurrentlyActive
         )
-
     }
-
 }

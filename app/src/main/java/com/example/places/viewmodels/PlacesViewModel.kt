@@ -64,13 +64,11 @@ class PlacesViewModel : ViewModel() {
                 exceptionCaught.value = true
             }
         }
-
     }
 
     private fun getPhotoApi(
         placeResponse: List<Result>
     ) {
-        // TODO: Check this on Thursday
         viewModelScope.launch {
             try {
                 val listPhoto = mutableListOf<PhotoResponse?>()
@@ -95,11 +93,11 @@ class PlacesViewModel : ViewModel() {
                         it.geocodes.main.longitude,
                         photo?.get(0)?.prefix + "original" + photo?.get(0)?.suffix,
                     )
-
                 }
                 placesLiveData.value = listPlace
 
             } catch (exception : IndexOutOfBoundsException) {
+                exception.printStackTrace()
             }
         }
     }

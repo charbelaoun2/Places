@@ -7,7 +7,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.fragment.app.Fragment
 import com.example.places.databinding.ActivityMainBinding
-import com.example.places.saved_item.ListSavedFragment
 import com.example.places.viewmodels.PlacesViewModel
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.ktx.analytics
@@ -33,7 +32,6 @@ class MainActivity : AppCompatActivity() {
             builder.setIcon(R.drawable.ic_baseline_wifi_off_24)
             builder.setPositiveButton("Cancel") { dialog, _ -> dialog.dismiss() }
             builder.show()
-
         }
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -47,12 +45,10 @@ class MainActivity : AppCompatActivity() {
             }
             true
         }
-
         viewModel.selectedPlace.observe(this) {
             loadFragment(MapFragment(), "map fragment")
         }
     }
-
     private fun loadFragment(fragment: Fragment, tag: String) {
         supportFragmentManager.beginTransaction().apply {
             replace(R.id.frame_layout, fragment, tag)
